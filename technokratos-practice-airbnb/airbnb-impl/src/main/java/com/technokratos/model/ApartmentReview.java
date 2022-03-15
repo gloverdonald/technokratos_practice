@@ -17,6 +17,6 @@ public class ApartmentReview extends AbstractEntity {
     private String comment;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "apartment_id", referencedColumnName = "id")
+    @JoinColumn(name = "apartment_id", referencedColumnName = "uuid")
     private Apartment apartment;
 }

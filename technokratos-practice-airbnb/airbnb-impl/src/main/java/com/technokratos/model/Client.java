@@ -31,9 +31,6 @@ public class Client  extends AbstractEntity {
     @Column(name = "last_name")
     String lastName;
 
-    @Column(name = "registration_date")
-    Date registrationDate;
-
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     @ToString.Exclude
     List<Booking> bookings;
