@@ -1,6 +1,7 @@
 package com.technokratos.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,16 +13,11 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Entity
 @ToString
 @Table(name = "apartment_address")
-public class ApartmentAddress {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
-
+public class ApartmentAddress extends AbstractEntity {
     private String country;
     private String region;
     private String city;
@@ -36,10 +32,7 @@ public class ApartmentAddress {
     @Column(name = "postal_code")
     private String postalCode;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "apartment_id", referencedColumnName = "id")
     private Apartment apartment;
-
-    @UpdateTimestamp
-    private LocalDateTime updateDateTime;
 }

@@ -1,27 +1,19 @@
 package com.technokratos.model;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Entity
 @ToString
-public class Apartment {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
-
+public class Apartment extends AbstractEntity {
     Integer price;
 
     @Column(name = "description_long")
@@ -49,7 +41,4 @@ public class Apartment {
 
     @OneToOne(mappedBy = "apartment")
     Availability availability;
-
-    @UpdateTimestamp
-    private LocalDateTime updateDateTime;
 }

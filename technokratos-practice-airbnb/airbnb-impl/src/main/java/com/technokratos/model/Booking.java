@@ -1,6 +1,7 @@
 package com.technokratos.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,15 +14,10 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Entity
 @ToString
-public class Booking {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
-
+public class Booking  extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name = "apartment_id")
     Apartment apartment;
@@ -35,7 +31,4 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     Client client;
-
-    @UpdateTimestamp
-    private LocalDateTime updateDateTime;
 }
