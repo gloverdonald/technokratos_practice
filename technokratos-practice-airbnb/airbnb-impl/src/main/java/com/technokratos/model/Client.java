@@ -2,14 +2,12 @@ package com.technokratos.model;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
+
 
 @Setter
 @Getter
@@ -18,22 +16,23 @@ import java.util.UUID;
 @SuperBuilder
 @Entity
 @ToString
-public class Client  extends AbstractEntity {
-    String email;
-    String password;
-    Boolean verified;
+public class Client extends AbstractEntity {
+    private String email;
+    private String password;
+    @ColumnDefault("false")
+    private Boolean verified = false;
 
     @Column(name = "first_name")
-    String firstName;
+    private String firstName;
     @Column(name = "birth_date")
-    Date birthDate;
+    private Date birthDate;
 
     @Column(name = "last_name")
-    String lastName;
+    private String lastName;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     @ToString.Exclude
-    List<Booking> bookings;
+    private List<Booking> bookings;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     @ToString.Exclude

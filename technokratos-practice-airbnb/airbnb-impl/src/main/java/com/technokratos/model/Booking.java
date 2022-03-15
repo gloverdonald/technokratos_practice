@@ -20,15 +20,15 @@ import java.util.UUID;
 public class Booking  extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name = "apartment_id")
-    Apartment apartment;
+    private Apartment apartment;
 
     @Column(name = "date_in")
-    Date dateIn;
+    private Date dateIn;
 
     @Column(name = "date_out")
-    Date dateOut;
+    private Date dateOut;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    Client client;
+    private Client client;
 }

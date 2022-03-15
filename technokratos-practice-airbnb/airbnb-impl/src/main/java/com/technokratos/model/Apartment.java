@@ -14,31 +14,31 @@ import java.util.List;
 @Entity
 @ToString
 public class Apartment extends AbstractEntity {
-    Integer price;
+    private Integer price;
 
     @Column(name = "description_long")
-    String descriptionLong;
+    private String descriptionLong;
 
     @Column(name = "description_short")
-    String descriptionShort;
+    private String descriptionShort;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    Client owner;
+    private Client owner;
 
     @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
     @ToString.Exclude
-    List<Booking> bookings;
+    private List<Booking> bookings;
 
     @OneToOne(mappedBy = "apartment")
-    ApartmentAddress address;
+    private ApartmentAddress address;
 
     @OneToOne(mappedBy = "apartment")
-    ApartmentReview review;
+    private ApartmentReview review;
 
     @OneToOne(mappedBy = "apartment")
-    ApartmentInfo info;
+    private ApartmentInfo info;
 
     @OneToOne(mappedBy = "apartment")
-    Availability availability;
+    private Availability availability;
 }
