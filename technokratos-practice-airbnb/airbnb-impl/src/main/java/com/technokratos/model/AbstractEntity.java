@@ -24,16 +24,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AbstractEntity {
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID uuid;
-
     @CreationTimestamp
     @Column(name = "create_date")
     private Instant createDate;
-
     @UpdateTimestamp
-    private LocalDateTime updated;
+    private Instant updated;
 }
