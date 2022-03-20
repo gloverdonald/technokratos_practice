@@ -21,13 +21,12 @@ public class ApartmentAddress extends AbstractEntity {
     private String country;
     private String region;
     private String city;
-    private String house;
 
-    @Column(name = "flat_type")
-    private String flatType;
+    @Column(name = "house_type")
+    private String houseType;
 
-    @Column(name = "flat_number")
-    private String flatNumber;
+    @Column(name = "house_number")
+    private String houseNumber;
 
     @Column(name = "postal_code")
     private String postalCode;

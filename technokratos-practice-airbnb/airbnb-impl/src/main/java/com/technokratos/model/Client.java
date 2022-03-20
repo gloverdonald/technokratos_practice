@@ -16,19 +16,21 @@ import java.util.List;
 @SuperBuilder
 @Entity
 @ToString
+@Table(name = "account")
 public class Client extends AbstractEntity {
     private String email;
     private String password;
-    @ColumnDefault("false")
-    private Boolean verified = false;
+    private Boolean verified;
 
-    @Column(name = "first_name")
-    private String firstName;
     @Column(name = "birth_date")
     private Date birthDate;
 
+    @Column(name = "first_name")
+    private String firstName;
+
     @Column(name = "last_name")
     private String lastName;
+
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     @ToString.Exclude
