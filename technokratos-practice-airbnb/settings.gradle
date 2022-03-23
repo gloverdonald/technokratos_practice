@@ -1,0 +1,5 @@
+rootProject.name = 'technokratos-practice-airbnb'
+include 'airbnb-api'
+include 'airbnb-db'
+include 'airbnb-impl'
+
