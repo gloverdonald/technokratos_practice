@@ -13,9 +13,10 @@ import java.util.List;
 @SuperBuilder
 @Entity
 @ToString
-public class Apartment extends AbstractEntity {
-    private Integer price;
+@Table(name = "apartment")
+public class ApartmentEntity extends AbstractEntity {
 
+    private Integer price;
     @Column(name = "description_long")
     private String descriptionLong;
 
@@ -24,21 +25,21 @@ public class Apartment extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private Client owner;
+    private UserEntity owner;
 
-    @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "apartmentEntity", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<Booking> bookings;
+    private List<BookingEntity> bookings;
 
     @OneToOne(mappedBy = "apartment")
-    private ApartmentAddress address;
+    private ApartmentAddressEntity address;
 
     @OneToOne(mappedBy = "apartment")
-    private ApartmentReview review;
+    private ApartmentReviewEntity review;
 
     @OneToOne(mappedBy = "apartment")
-    private ApartmentInfo info;
+    private ApartmentInfoEntity info;
 
     @OneToOne(mappedBy = "apartment")
-    private Availability availability;
+    private AvailabilityEntity availability;
 }

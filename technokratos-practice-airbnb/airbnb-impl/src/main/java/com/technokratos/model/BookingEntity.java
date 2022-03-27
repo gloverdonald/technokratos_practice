@@ -2,13 +2,9 @@ package com.technokratos.model;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -17,10 +13,12 @@ import java.util.UUID;
 @SuperBuilder
 @Entity
 @ToString
-public class Booking  extends AbstractEntity{
+@Table(name = "booking")
+public class BookingEntity extends AbstractEntity{
+
     @ManyToOne
     @JoinColumn(name = "apartment_id")
-    private Apartment apartment;
+    private ApartmentEntity apartmentEntity;
 
     @Column(name = "date_in")
     private Date dateIn;
@@ -30,5 +28,5 @@ public class Booking  extends AbstractEntity{
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Client client;
+    private UserEntity user;
 }

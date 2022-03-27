@@ -12,11 +12,13 @@ import javax.persistence.*;
 @Entity
 @ToString
 @Table(name = "apartment_review")
-public class ApartmentReview extends AbstractEntity {
+public class ApartmentReviewEntity extends AbstractEntity {
+
     private Integer rating;
+
     private String comment;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "apartment_id", referencedColumnName = "uuid")
-    private Apartment apartment;
+    private ApartmentEntity apartment;
 }

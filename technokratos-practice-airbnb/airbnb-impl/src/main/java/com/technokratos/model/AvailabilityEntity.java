@@ -2,13 +2,9 @@ package com.technokratos.model;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -17,7 +13,9 @@ import java.util.UUID;
 @SuperBuilder
 @Entity
 @ToString
-public class Availability  extends AbstractEntity{
+@Table(name = "availability")
+public class AvailabilityEntity extends AbstractEntity{
+
     @Column(name = "date_from")
     private Date dateFrom;
 
@@ -26,5 +24,5 @@ public class Availability  extends AbstractEntity{
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "apartment_id", referencedColumnName = "uuid")
-    private Apartment apartment;
+    private ApartmentEntity apartment;
 }
