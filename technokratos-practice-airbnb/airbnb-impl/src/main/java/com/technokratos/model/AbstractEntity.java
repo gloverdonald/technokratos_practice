@@ -34,5 +34,6 @@ public class AbstractEntity {
     private Instant createDate;
 
     @UpdateTimestamp
-    private Instant updated;
+    @Column(name = "update_date")
+    private Instant updateDate;
 }

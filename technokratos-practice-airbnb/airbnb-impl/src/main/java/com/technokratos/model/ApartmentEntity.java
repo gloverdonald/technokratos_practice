@@ -17,6 +17,7 @@ import java.util.List;
 public class ApartmentEntity extends AbstractEntity {
 
     private Integer price;
+
     @Column(name = "description_long")
     private String descriptionLong;
 

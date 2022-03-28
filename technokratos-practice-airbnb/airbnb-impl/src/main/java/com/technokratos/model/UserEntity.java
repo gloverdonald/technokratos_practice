@@ -39,7 +39,7 @@ public class UserEntity extends AbstractEntity {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<BookingEntity> bookings;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<ApartmentEntity> apartments;
 }
