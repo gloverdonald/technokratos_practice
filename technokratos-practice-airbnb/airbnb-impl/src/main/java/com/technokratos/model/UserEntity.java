@@ -18,24 +18,25 @@ import java.util.List;
 @Table(name = "account")
 public class UserEntity extends AbstractEntity {
 
-    private String email;
-    @Column(name = "hash_password", nullable = false)
-    private String hashPassword;
-
-    @Builder.Default
-    private Boolean verified = false;
-
     @Column(name = "first_name")
     private String firstName;
-
-    @Column(name = "birth_date")
-    private Date birthDate;
 
     @Column(name = "last_name")
     private String lastName;
 
+    private String email;
+
+    @Column(name = "hash_password", nullable = false)
+    private String hashPassword;
+
+    @Column(name = "birth_date")
+    private Date birthDate;
+
+    @Builder.Default
+    private Boolean verified = false;
+
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<BookingEntity> bookings;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)

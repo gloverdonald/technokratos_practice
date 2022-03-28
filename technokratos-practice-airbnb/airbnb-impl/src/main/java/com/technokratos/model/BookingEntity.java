@@ -16,10 +16,6 @@ import java.sql.Date;
 @Table(name = "booking")
 public class BookingEntity extends AbstractEntity{
 
-    @ManyToOne
-    @JoinColumn(name = "apartment_id")
-    private ApartmentEntity apartmentEntity;
-
     @Column(name = "date_in")
     private Date dateIn;
 
@@ -27,6 +23,10 @@ public class BookingEntity extends AbstractEntity{
     private Date dateOut;
 
     @ManyToOne
+    @JoinColumn(name = "apartment_id")
+    private ApartmentEntity apartment;
+
+    @ManyToOne
     @JoinColumn(name = "customer_id")
-    private UserEntity user;
+    private UserEntity customer;
 }

@@ -27,7 +27,7 @@ public class ApartmentEntity extends AbstractEntity {
     @JoinColumn(name = "owner_id")
     private UserEntity owner;
 
-    @OneToMany(mappedBy = "apartmentEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<BookingEntity> bookings;
 
