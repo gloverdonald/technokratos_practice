@@ -2,6 +2,7 @@ package com.technokratos.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,6 +27,7 @@ import java.util.Properties;
 @PropertySource("classpath:application.properties")
 @EnableJpaRepositories(basePackages = "com.technokratos.repository")
 public class DataBaseConfig {
+
     @Autowired
     private Environment environment;
 
@@ -58,7 +60,6 @@ public class DataBaseConfig {
     @Bean
     public Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         properties.setProperty("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
         properties.setProperty("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
         properties.setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
@@ -67,8 +68,8 @@ public class DataBaseConfig {
     }
 
     @Bean
-    public DataSource dataSource(HikariConfig config) {
-        return new HikariDataSource(config);
+    public DataSource dataSource() {
+        return new HikariDataSource(hikariConfig());
     }
 
     @Bean
@@ -80,5 +81,13 @@ public class DataBaseConfig {
         config.setDriverClassName(environment.getProperty("db.driver-class-name"));
         config.setMaximumPoolSize(Integer.parseInt(Objects.requireNonNull(environment.getProperty("db.hikari.pool-size"))));
         return config;
+    }
+
+    @Bean
+    public SpringLiquibase liquibase() {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:changelog/database_airbnb_changelog.xml");
+        liquibase.setDataSource(dataSource());
+        return liquibase;
     }
 }
