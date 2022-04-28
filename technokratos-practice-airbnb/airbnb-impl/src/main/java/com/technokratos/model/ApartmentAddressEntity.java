@@ -30,6 +30,6 @@ public class ApartmentAddressEntity extends AbstractEntity {
     private String postalCode;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "apartment_id", referencedColumnName = "uuid")
+    @JoinColumn(name = "apartment_id", referencedColumnName = "id")
     private ApartmentEntity apartment;
 }

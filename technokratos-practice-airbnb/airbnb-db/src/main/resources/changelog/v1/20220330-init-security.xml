@@ -1,0 +1,60 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="002" author="Mikhail">
+        <createTable tableName="roles">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_roles"/>
+            </column>
+            <column name="role" type="VARCHAR(64)"/>
+            <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
+            <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="003" author="Mikhail">
+        <createTable tableName="refresh_token">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_account_refresh_token"/>
+            </column>
+            <column name="account_id" type="uuid">
+                <constraints foreignKeyName="fk_account_refresh_token"
+                             referencedTableName="account"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="expiry_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
+            <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="004" author="Mikhail">
+        <createTable tableName="account_roles">
+            <column name="account_id" type="uuid">
+                <constraints foreignKeyName="fk_account_roles_1"
+                             referencedTableName="account"
+                             referencedColumnNames="id"
+                             initiallyDeferred="false" deleteCascade="true"/>
+            </column>
+            <column name="role_id" type="uuid">
+                <constraints foreignKeyName="fk_account_roles_2"
+                             referencedTableName="roles"
+                             referencedColumnNames="id"
+                             initiallyDeferred="false" deleteCascade="true"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="005" author="Mikhail">
+        <sqlFile dbms="postgresql" splitStatements="false"
+                 path="sql/20220330_insert_roles.sql"
+                 stripComments="false"
+                 encoding="utf8"
+                 relativeToChangelogFile="true"/>
+    </changeSet>
+</databaseChangeLog>

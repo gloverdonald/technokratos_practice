@@ -7,5 +7,6 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="20220319_init_db.xml" relativeToChangelogFile="true"/>
-
+    <include file="20220330-init-security.xml" relativeToChangelogFile="true"/>
+    <include file="20220424-user-deleting.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
