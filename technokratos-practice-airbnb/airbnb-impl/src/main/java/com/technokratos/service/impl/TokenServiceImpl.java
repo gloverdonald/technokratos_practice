@@ -8,16 +8,12 @@ import com.technokratos.model.RefreshTokenEntity;
 import com.technokratos.model.UserEntity;
 import com.technokratos.repository.RefreshTokenRepository;
 import com.technokratos.repository.UserRepository;
-import com.technokratos.service.TokenServise;
+import com.technokratos.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import liquibase.repackaged.org.apache.commons.lang3.StringUtils;
-import liquibase.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -29,7 +25,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class TokenServiceImpl implements TokenServise {
+public class TokenServiceImpl implements TokenService {
 
     @Value("${airbnb.expiration.refresh}")
     private Long refreshTokenLifetime;

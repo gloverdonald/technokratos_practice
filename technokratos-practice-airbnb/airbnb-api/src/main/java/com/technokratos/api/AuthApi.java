@@ -1,6 +1,6 @@
 package com.technokratos.api;
 
-import com.technokratos.dto.request.LogOutRequest;
+import com.technokratos.dto.request.LogoutRequest;
 import com.technokratos.dto.request.LoginRequest;
 import com.technokratos.dto.request.RegistrationRequest;
 import com.technokratos.dto.request.TokenRefreshRequest;
@@ -30,5 +30,5 @@ public interface AuthApi {
 
     @PostMapping("/sign_out")
     @ResponseStatus(HttpStatus.OK)
-    void logout(@RequestBody LogOutRequest logOutRequest);
+    void logout(@RequestBody LogoutRequest logoutRequest);
 }

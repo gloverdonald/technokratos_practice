@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LogOutRequest {
+public class LogoutRequest {
 
     private Long userId;
 }
