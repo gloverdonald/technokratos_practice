@@ -42,8 +42,4 @@ public class AuthController implements AuthApi {
         return tokenService.refreshTokens(request);
     }
 
-    @Override
-    public void logout(LogoutRequest logoutRequest) {
-
-    }
 }
