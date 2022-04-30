@@ -17,8 +17,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PERMIT_ALL = {
-            "/api/v1/auth/sign_in",
-            "/api/v1/auth/sign_up",
+            "/api/v1/auth/sign-in",
+            "/api/v1/auth/sign-up",
             "/api/v1/auth/refresh",
     };
 
