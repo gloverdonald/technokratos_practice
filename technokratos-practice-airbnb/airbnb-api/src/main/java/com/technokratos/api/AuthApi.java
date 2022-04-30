@@ -16,11 +16,11 @@ import java.util.UUID;
 @RequestMapping("/api/v1/auth")
 public interface AuthApi {
 
-    @PostMapping(value = "/sign_up")
+    @PostMapping(value = "/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
     UUID create(@RequestBody RegistrationRequest userRequest);
 
-    @PostMapping(value = "/sign_in")
+    @PostMapping(value = "/sign-in")
     @ResponseStatus(HttpStatus.OK)
     TokensResponse login(@RequestBody LoginRequest userRequest);
 
@@ -28,7 +28,4 @@ public interface AuthApi {
     @ResponseStatus(HttpStatus.OK)
     TokensResponse refresh(@RequestBody TokenRefreshRequest request);
 
-    @PostMapping("/sign_out")
-    @ResponseStatus(HttpStatus.OK)
-    void logout(@RequestBody LogoutRequest logoutRequest);
 }

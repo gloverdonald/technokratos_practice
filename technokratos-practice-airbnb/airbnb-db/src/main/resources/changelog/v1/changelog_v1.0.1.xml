@@ -9,4 +9,6 @@
     <include file="20220319_init_db.xml" relativeToChangelogFile="true"/>
     <include file="20220330-init-security.xml" relativeToChangelogFile="true"/>
     <include file="20220424-user-deleting.xml" relativeToChangelogFile="true"/>
+    <include file="20220430-confirmation-token.xml" relativeToChangelogFile="true"/>
+    <include file="20220430-add-confirmation-token.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
