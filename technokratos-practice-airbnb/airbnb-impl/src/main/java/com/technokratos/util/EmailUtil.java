@@ -47,7 +47,6 @@ public class EmailUtil {
             };
             mailSender.send(preparator);
         } catch (IOException | TemplateException | MailException e) {
-            System.out.println(e);
             throw new EmailNotSendException();
         }
     }

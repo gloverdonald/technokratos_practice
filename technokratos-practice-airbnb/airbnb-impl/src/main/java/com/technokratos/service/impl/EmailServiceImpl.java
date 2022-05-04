@@ -54,27 +54,28 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void create(LoginRequest userRequest) {
-        System.out.println(userRequest.getEmail());
-        Optional<UserEntity> userEntity = userRepository.findByEmail(userRequest.getEmail());
-        if (userEntity.isPresent()) {
-            if (userEntity.get().getVerified()) {
-                throw new EmailAlreadyConfirmedException();
-            } else {
-                if (passwordEncoder.matches(userRequest.getPassword(), userEntity.get().getHashPassword())) {
-                    ConfirmationTokenEntity token = ConfirmationTokenEntity.builder()
-                            .token(UUID.randomUUID().toString())
-                            .user(userEntity.get())
-                            .build();
-                    confirmationTokenRepository.save(token);
+        UserEntity userEntity = userRepository.findByEmail(userRequest.getEmail())
+                .orElseThrow(() ->
+                        new UnauthorizedException("Can't login in: " + userRequest.getEmail() + ". Wrong email or password."));
 
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("user", userEntity.get());
-                    data.put("confirmLink", emailUrl + token.getToken());
+        if (userEntity.getVerified()) {
+            throw new EmailAlreadyConfirmedException();
+        } else {
+            if (passwordEncoder.matches(userRequest.getPassword(), userEntity.getHashPassword())) {
+                ConfirmationTokenEntity token = ConfirmationTokenEntity.builder()
+                        .token(UUID.randomUUID().toString())
+                        .user(userEntity)
+                        .build();
+                confirmationTokenRepository.save(token);
 
-                    emailUtil.sendMail(userEntity.get().getEmail(), "confirmation", "confirm_mail", data);
-                } else
-                    throw new UnauthorizedException("Can't login in: " + userRequest.getEmail() + ". Wrong email or password.");
-            }
+                Map<String, Object> data = new HashMap<>();
+                data.put("user", userEntity);
+                data.put("confirmLink", emailUrl + token.getToken());
+
+                emailUtil.sendMail(userEntity.getEmail(), "confirmation", "confirm_mail", data);
+            } else
+                throw new UnauthorizedException("Can't login in: " + userRequest.getEmail() + ". Wrong email or password.");
+
         }
     }
 }

@@ -34,9 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UUID create(RegistrationRequest userRequest) {
-        if (userRepository.findByEmail(userRequest.getEmail()).isPresent()) {
-            throw new UserAlreadyExistsException();
-        }
+        userRepository.findByEmail(userRequest.getEmail()).orElseThrow(UserAlreadyExistsException::new);
         UserEntity user = userMapper.toEntity(userRequest);
         user.setHashPassword(passwordEncoder.encode(userRequest.getPassword()));
         List<RoleEntity> roles = userRequest.getRoles()
@@ -49,17 +47,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse login(LoginRequest request) {
-        Optional<UserEntity> userEntity = userRepository.findByEmail(request.getEmail());
-        if (userEntity.isPresent()) {
-            if (userEntity.get().getVerified()) {
-                if (passwordEncoder.matches(request.getPassword(), userEntity.get().getHashPassword())) {
-                    return userMapper.toResponse(userEntity.get());
-                } else
-                    throw new UnauthorizedException("Can't login in: " + request.getEmail() + ". Wrong email or password.");
-            } else {
-                throw new ConfirmEmailException();
-            }
-        } else
-            throw new UnauthorizedException("Can't login in: " + request.getEmail() + ". Wrong email or password.");
+        UserEntity userEntity = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new UnauthorizedException("Can't login in: " + request.getEmail() + ". Wrong email or password."));
+
+        if (userEntity.getVerified()) {
+            if (passwordEncoder.matches(request.getPassword(), userEntity.getHashPassword())) {
+                return userMapper.toResponse(userEntity);
+            } else
+                throw new UnauthorizedException("Can't login in: " + request.getEmail() + ". Wrong email or password.");
+        } else {
+            throw new ConfirmEmailException();
+        }
+
     }
 }
