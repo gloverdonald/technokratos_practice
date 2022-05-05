@@ -38,17 +38,15 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public Boolean confirm(String confirmCode) {
-        Optional<ConfirmationTokenEntity> confirmationToken = confirmationTokenRepository.findByToken(confirmCode);
-        if (confirmationToken.isPresent()) {
-            UserEntity user = confirmationToken.get().getUser();
-            if (user.getVerified()) {
-                throw new EmailAlreadyConfirmedException();
-            }
-            user.setVerified(true);
-            userRepository.save(user);
-        } else {
-            throw new ConfirmCodeNotFoundException();
+        ConfirmationTokenEntity confirmationToken = confirmationTokenRepository.findByToken(confirmCode)
+                .orElseThrow(ConfirmCodeNotFoundException::new);
+        UserEntity user = confirmationToken.getUser();
+        if (user.getVerified()) {
+            throw new EmailAlreadyConfirmedException();
         }
+        user.setVerified(true);
+        userRepository.save(user);
+
         return true;
     }
 
