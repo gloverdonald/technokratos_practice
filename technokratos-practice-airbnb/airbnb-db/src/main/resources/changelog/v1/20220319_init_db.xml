@@ -4,8 +4,8 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <changeSet id="001" author="Mikhail">
         <createTable tableName="account">
-            <column name="uuid" type="uuid">
-                <constraints nullable="false" primaryKey="true"/>
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_account"/>
             </column>
             <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
@@ -22,8 +22,8 @@
         </createTable>
 
         <createTable tableName="apartment">
-            <column name="uuid" type="uuid">
-                <constraints nullable="false" primaryKey="true"/>
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_apartment"/>
             </column>
             <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
@@ -31,13 +31,13 @@
             <column name="description_long" type="VARCHAR(5100)"/>
             <column name="description_short" type="VARCHAR(255)"/>
             <column name="owner_id" type="uuid">
-                <constraints nullable="false" foreignKeyName="fk_apartment_owner" references="account(uuid)"/>
+                <constraints nullable="false" foreignKeyName="fk_apartment_owner" references="account(id)"/>
             </column>
         </createTable>
 
         <createTable tableName="apartment_address">
-            <column name="uuid" type="uuid">
-                <constraints nullable="false" primaryKey="true"/>
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_apartment_address"/>
             </column>
             <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
@@ -48,26 +48,26 @@
             <column name="house_number" type="VARCHAR(255)"/>
             <column name="postal_code" type="VARCHAR(255)"/>
             <column name="apartment_id" type="uuid">
-                <constraints nullable="false" foreignKeyName="fk_address_apartment" references="apartment(uuid)"/>
+                <constraints nullable="false" foreignKeyName="fk_address_apartment" references="apartment(id)"/>
             </column>
         </createTable>
 
         <createTable tableName="apartment_review">
-            <column name="uuid" type="uuid">
-                <constraints nullable="false" primaryKey="true"/>
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_apartment_review"/>
             </column>
             <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="rating" type="integer"/>
             <column name="comment" type="VARCHAR(5100)"/>
             <column name="apartment_id" type="uuid">
-                <constraints nullable="false" foreignKeyName="fk_review_apartment" references="apartment(uuid)"/>
+                <constraints nullable="false" foreignKeyName="fk_review_apartment" references="apartment(id)"/>
             </column>
         </createTable>
 
         <createTable tableName="apartment_info">
-            <column name="uuid" type="uuid">
-                <constraints nullable="false" primaryKey="true"/>
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_apartment_info"/>
             </column>
             <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
@@ -81,35 +81,35 @@
             <column name="heat" type="boolean"/>
             <column name="washing_machine" type="boolean"/>
             <column name="apartment_id" type="uuid">
-                <constraints nullable="false" foreignKeyName="fk_info_apartment" references="apartment(uuid)"/>
+                <constraints nullable="false" foreignKeyName="fk_info_apartment" references="apartment(id)"/>
             </column>
         </createTable>
 
         <createTable tableName="availability">
-            <column name="uuid" type="uuid">
-                <constraints nullable="false" primaryKey="true"/>
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_availability"/>
             </column>
             <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="date_from" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="date_to" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="apartment_id" type="uuid">
-                <constraints nullable="false" foreignKeyName="fk_availability_apartment" references="apartment(uuid)"/>
+                <constraints nullable="false" foreignKeyName="fk_availability_apartment" references="apartment(id)"/>
             </column>
         </createTable>
         <createTable tableName="booking">
-            <column name="uuid" type="uuid">
-                <constraints nullable="false" primaryKey="true"/>
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_booking"/>
             </column>
             <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="date_in" type="date"/>
             <column name="date_out" type="date"/>
             <column name="apartment_id" type="uuid">
-                <constraints nullable="false" foreignKeyName="fk_booking_apartment" references="apartment(uuid)"/>
+                <constraints nullable="false" foreignKeyName="fk_booking_apartment" references="apartment(id)"/>
             </column>
             <column name="customer_id" type="uuid">
-                <constraints nullable="false" foreignKeyName="fk_booking_customer" references="account(uuid)"/>
+                <constraints nullable="false" foreignKeyName="fk_booking_customer" references="account(id)"/>
             </column>
         </createTable>
     </changeSet>

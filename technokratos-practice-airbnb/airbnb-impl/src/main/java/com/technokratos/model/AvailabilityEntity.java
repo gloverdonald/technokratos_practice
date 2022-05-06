@@ -23,6 +23,6 @@ public class AvailabilityEntity extends AbstractEntity{
     private Date dateTo;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "apartment_id", referencedColumnName = "uuid")
+    @JoinColumn(name = "apartment_id", referencedColumnName = "id")
     private ApartmentEntity apartment;
 }

@@ -42,4 +42,13 @@ public class UserEntity extends AbstractEntity {
     @ToString.Exclude
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<ApartmentEntity> apartments;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "account_roles",
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<RoleEntity> roles;
+
+    @Builder.Default
+    private Boolean deleted = false;
 }
