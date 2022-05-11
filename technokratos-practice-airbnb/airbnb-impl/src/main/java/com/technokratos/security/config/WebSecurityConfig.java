@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         ClientRegistration registration = CommonOAuth2Provider.GOOGLE.getBuilder("google")
                 .clientId(clientId)
                 .clientSecret(clientSecret)
-                .scope("openid", "profile", "email")
+                .scope()
                 .build();
         return new InMemoryClientRegistrationRepository(registration);
     }
