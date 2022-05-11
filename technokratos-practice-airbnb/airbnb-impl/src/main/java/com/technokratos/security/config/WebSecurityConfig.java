@@ -20,7 +20,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/v1/auth/sign-in",
             "/api/v1/auth/sign-up",
             "/api/v1/auth/refresh",
-            "/api/v1/email/confirm/**"
+            "/api/v1/email/confirm/**",
+            "/api/v1/photo/**",
+            "/api/v1/users/**",
+            "/api/v1/apartments/**"
     };
 
     private final TokenAuthorizationFilter authorizationFilter;

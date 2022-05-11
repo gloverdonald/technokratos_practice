@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+    <changeSet author="Milana" id="008">
+        <createTable tableName="apartment_photos">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_apartment_photo"/>
+            </column>
+            <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
+            <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
+            <column name="apartment_id" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_photo_apartment" references="apartment(id)"/>
+            </column>
+            <column name="photo_id" type="VARCHAR(255)" defaultValueComputed="null">
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
