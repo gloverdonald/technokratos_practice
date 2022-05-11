@@ -7,7 +7,6 @@ import com.technokratos.service.impl.TokenAuthorizationServiceImpl;
 import com.technokratos.util.HttpResponseUtil;
 import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -54,7 +53,7 @@ public class TokenAuthorizationFilter extends GenericFilterBean {
                 }
             }
             chain.doFilter(request, response);
-        } catch (SignatureException exception) {
+        } catch (Exception exception) {
             SecurityContextHolder.clearContext();
             HttpResponseUtil.putExceptionInResponse(((HttpServletRequest) request), ((HttpServletResponse) response),
                     exception, HttpServletResponse.SC_UNAUTHORIZED);
