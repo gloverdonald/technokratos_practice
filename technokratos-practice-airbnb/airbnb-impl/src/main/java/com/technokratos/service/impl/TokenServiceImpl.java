@@ -14,6 +14,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -44,10 +45,22 @@ public class TokenServiceImpl implements TokenService {
         UserEntity userEntity = userRepository
                 .findById(userResponse.getId())
                 .orElseThrow(UserNotFoundException::new);
-
         RefreshTokenEntity refreshToken = generateRefreshToken(userEntity);
         refreshTokenRepository.save(refreshToken);
+        return TokensResponse.builder()
+                .accessToken("BEARER ".concat(generateAccessToken(userEntity)))
+                .refreshToken(refreshToken.getId().toString())
+                .build();
+    }
 
+    @Override
+    public TokensResponse generateOAuthTokens(DefaultOAuth2User defaultOAuth2User) {
+        String email = defaultOAuth2User.getAttributes().get("email").toString();
+        UserEntity userEntity = userRepository
+                .findByEmail(email)
+                .orElseThrow(UserNotFoundException::new);
+        RefreshTokenEntity refreshToken = generateRefreshToken(userEntity);
+        refreshTokenRepository.save(refreshToken);
         return TokensResponse.builder()
                 .accessToken("BEARER ".concat(generateAccessToken(userEntity)))
                 .refreshToken(refreshToken.getId().toString())
@@ -59,9 +72,7 @@ public class TokenServiceImpl implements TokenService {
         RefreshTokenEntity refreshTokenEntity = refreshTokenRepository
                 .findById(UUID.fromString(request.getRefreshToken()))
                 .orElseThrow(UserNotFoundException::new);
-
         UserEntity userEntity = refreshTokenEntity.getUser();
-
         refreshTokenRepository.deleteById(refreshTokenEntity.getId());
         RefreshTokenEntity newRefreshToken = generateRefreshToken(userEntity);
         refreshTokenRepository.save(newRefreshToken);
@@ -81,13 +92,11 @@ public class TokenServiceImpl implements TokenService {
     private String generateAccessToken(UserEntity userEntity) {
         Map<String, Object> claims = Jwts.claims();
         claims.put(Claims.SUBJECT, userEntity.getEmail());
-
         List<String> roleNames = userEntity.getRoles()
                 .stream()
                 .map(role -> (role.getRole().name()))
                 .toList();
         claims.put("roles", roleNames);
-
         return Jwts.builder()
                 .setSubject(userEntity.getEmail())
                 .setClaims(claims)
