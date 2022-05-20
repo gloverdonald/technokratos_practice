@@ -26,6 +26,9 @@ public class ApartmentAddressEntity extends AbstractEntity {
     @Column(name = "house_number")
     private String houseNumber;
 
+    @Column(name = "flat_number")
+    private String flatNumber;
+
     @Column(name = "postal_code")
     private String postalCode;
 
