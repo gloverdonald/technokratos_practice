@@ -34,9 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UUID create(RegistrationRequest userRequest) {
-        if (userRepository.findByEmail(userRequest.getEmail()).isPresent()) {
+        userRepository.findByEmail(userRequest.getEmail()).ifPresent(x -> {
             throw new UserAlreadyExistsException();
-        }
+        });
         UserEntity user = userMapper.toEntity(userRequest);
         user.setHashPassword(passwordEncoder.encode(userRequest.getPassword()));
         List<RoleEntity> roles = userRequest.getRoles()

@@ -19,10 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 @EnableWebMvc
 @Configuration
@@ -31,6 +28,12 @@ public class WebWvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private Environment environment;
+
+    private final List<MediaType> supportedTypes = List.of(
+            MediaType.IMAGE_JPEG,
+            MediaType.IMAGE_PNG,
+            MediaType.APPLICATION_OCTET_STREAM
+    );
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -42,16 +45,8 @@ public class WebWvcConfig implements WebMvcConfigurer {
     @Bean
     public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
         ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
-        arrayHttpMessageConverter.setSupportedMediaTypes(getSupportedMediaTypes());
+        arrayHttpMessageConverter.setSupportedMediaTypes(supportedTypes);
         return arrayHttpMessageConverter;
-    }
-
-    private List<MediaType> getSupportedMediaTypes() {
-        List<MediaType> list = new ArrayList<>();
-        list.add(MediaType.IMAGE_JPEG);
-        list.add(MediaType.IMAGE_PNG);
-        list.add(MediaType.APPLICATION_OCTET_STREAM);
-        return list;
     }
 
     @Bean

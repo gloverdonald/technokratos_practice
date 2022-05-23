@@ -9,11 +9,12 @@ import java.util.UUID;
 @RequestMapping("/api/v1/users")
 public interface UserApi {
 
-    @PostMapping("/user/{id}/avatar")
+    @PostMapping("/{id}/avatar")
     @ResponseStatus(HttpStatus.OK)
-    String avatarUpload(@RequestParam("photo") MultipartFile photo, @PathVariable("id") UUID userId);
+    String uploadAvatar(@RequestParam("photo") MultipartFile photo,
+                        @PathVariable("id") UUID userId);
 
-    @DeleteMapping("/user/{id}/avatar")
+    @DeleteMapping("/{id}/avatar")
     @ResponseStatus(HttpStatus.OK)
-    void avatarDelete(@PathVariable("id") UUID userId);
+    void deleteAvatar(@PathVariable("id") UUID userId);
 }

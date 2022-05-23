@@ -22,14 +22,6 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public String upload(MultipartFile photo) {
-        if (photo.isEmpty() || photo.getSize() == 0) {
-            throw new PhotoIsEmptyException();
-        }
-        if (!(photo.getContentType().equals("image/jpeg")
-                || photo.getContentType().equals("image/png"))) {
-            throw new UnsupportedMediaTypeException();
-
-        }
         try {
             return photoRepository.savePhoto(photo);
         } catch (IOException e) {

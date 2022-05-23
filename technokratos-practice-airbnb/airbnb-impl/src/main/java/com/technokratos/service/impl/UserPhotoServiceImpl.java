@@ -8,12 +8,15 @@ import com.technokratos.model.UserEntity;
 import com.technokratos.repository.PhotoRepository;
 import com.technokratos.repository.UserRepository;
 import com.technokratos.service.UserPhotoService;
+import com.technokratos.util.PhotoValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.UUID;
+
+import static com.technokratos.util.PhotoValidation.validatePhoto;
 
 @Service
 @RequiredArgsConstructor
@@ -25,14 +28,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 
     @Override
     public String upload(MultipartFile photo, UUID userId) {
-        if (photo.isEmpty() || photo.getSize() == 0) {
-            throw new PhotoIsEmptyException();
-        }
-        if (!(photo.getContentType().equals("image/jpeg")
-                || photo.getContentType().equals("image/png"))) {
-            throw new UnsupportedMediaTypeException();
-
-        }
+        validatePhoto(photo);
         try {
             UserEntity user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
             String id = photoRepository.savePhoto(photo);
@@ -51,9 +47,8 @@ public class UserPhotoServiceImpl implements UserPhotoService {
     public void delete(UUID userId) {
         try {
             UserEntity user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-            if (photoRepository.findById(user.getAvatarId()).isPresent()) {
-                photoRepository.delete(user.getAvatarId());
-            }
+            photoRepository.findById(user.getAvatarId())
+                    .ifPresent(photo -> photoRepository.delete(photo.getId()));
             user.setAvatarId(null);
             userRepository.save(user);
         } catch (IOException e) {

@@ -10,19 +10,19 @@ import java.util.UUID;
 @RequestMapping("/api/v1/apartments")
 public interface ApartmentApi {
 
-    @PostMapping("/apartment/{id}/photo")
+    @PostMapping("/{id}/photo")
     @ResponseStatus(HttpStatus.OK)
-    String photoUpload(@RequestParam("photo") MultipartFile photo, @PathVariable("id") UUID apartmentId);
+    String uploadPhoto(@RequestParam("photo") MultipartFile photo, @PathVariable("id") UUID apartmentId);
 
-    @GetMapping("/apartment/{id}/photos")
+    @GetMapping("/{id}/photos")
     @ResponseStatus(HttpStatus.OK)
     List<String> allPhotos(@PathVariable("id") UUID apartmentId);
 
-    @DeleteMapping("/apartment/{id}/photo/{photoId}")
+    @DeleteMapping("/{id}/photo/{photoId}")
     @ResponseStatus(HttpStatus.OK)
-    void photoDelete(@PathVariable("id") UUID apartmentId, @PathVariable("photoId") String photoId);
+    void deletePhoto(@PathVariable("id") UUID apartmentId, @PathVariable("photoId") String photoId);
 
-    @DeleteMapping("/apartment/{id}/photos")
+    @DeleteMapping("/{id}/photos")
     @ResponseStatus(HttpStatus.OK)
-    void photosDelete(@PathVariable("id") UUID apartmentId);
+    void deletePhotos(@PathVariable("id") UUID apartmentId);
 }

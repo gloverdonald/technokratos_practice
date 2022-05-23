@@ -15,12 +15,12 @@ public class UserController implements UserApi {
     private final UserPhotoService userPhotoService;
 
     @Override
-    public String avatarUpload(MultipartFile photo, UUID userId) {
+    public String uploadAvatar(MultipartFile photo, UUID userId) {
         return userPhotoService.upload(photo, userId);
     }
 
     @Override
-    public void avatarDelete(UUID userId) {
+    public void deleteAvatar(UUID userId) {
         userPhotoService.delete(userId);
     }
 }

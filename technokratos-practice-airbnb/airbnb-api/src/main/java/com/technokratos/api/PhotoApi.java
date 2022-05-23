@@ -10,8 +10,8 @@ public interface PhotoApi {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    PhotoResponse photoDownload(@PathVariable("id") String id);
+    PhotoResponse downloadPhoto(@PathVariable("id") String id);
 
     @GetMapping(value = "/view/{id}")
-    ResponseEntity<byte[]> photoShow(@PathVariable("id") String id);
+    ResponseEntity<byte[]> showPhoto(@PathVariable("id") String id);
 }

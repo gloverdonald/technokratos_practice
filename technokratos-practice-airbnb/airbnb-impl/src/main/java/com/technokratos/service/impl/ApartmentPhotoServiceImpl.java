@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.technokratos.util.PhotoValidation.validatePhoto;
+
 @Service
 @RequiredArgsConstructor
 public class ApartmentPhotoServiceImpl implements ApartmentPhotoService {
@@ -29,14 +31,7 @@ public class ApartmentPhotoServiceImpl implements ApartmentPhotoService {
 
     @Override
     public String upload(MultipartFile photo, UUID apartmentId) {
-        if (photo.isEmpty() || photo.getSize() == 0) {
-            throw new PhotoIsEmptyException();
-        }
-        if (!(photo.getContentType().equals("image/jpeg")
-                || photo.getContentType().equals("image/png"))) {
-            throw new UnsupportedMediaTypeException();
-
-        }
+        validatePhoto(photo);
         try {
             ApartmentEntity apartmentEntity = apartmentRepository.findById(apartmentId)
                     .orElseThrow(ApartmentNotFoundException::new);

@@ -16,7 +16,7 @@ public class ApartmentController implements ApartmentApi {
     private final ApartmentPhotoService apartmentPhotoService;
 
     @Override
-    public String photoUpload(MultipartFile photo, UUID apartmentId) {
+    public String uploadPhoto(MultipartFile photo, UUID apartmentId) {
         return apartmentPhotoService.upload(photo, apartmentId);
     }
 
@@ -26,12 +26,12 @@ public class ApartmentController implements ApartmentApi {
     }
 
     @Override
-    public void photoDelete(UUID apartmentId, String photoId) {
+    public void deletePhoto(UUID apartmentId, String photoId) {
         apartmentPhotoService.delete(photoId, apartmentId);
     }
 
     @Override
-    public void photosDelete(UUID apartmentId) {
+    public void deletePhotos(UUID apartmentId) {
         apartmentPhotoService.deleteAll(apartmentId);
     }
 }

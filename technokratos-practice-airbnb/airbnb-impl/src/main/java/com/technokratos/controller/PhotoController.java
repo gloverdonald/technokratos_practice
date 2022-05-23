@@ -26,12 +26,12 @@ public class PhotoController implements PhotoApi {
     private final PhotoService photoService;
 
     @Override
-    public PhotoResponse photoDownload(String id) {
+    public PhotoResponse downloadPhoto(String id) {
         return photoService.download(id);
     }
 
     @Override
-    public ResponseEntity<byte[]> photoShow(String id) {
+    public ResponseEntity<byte[]> showPhoto(String id) {
         PhotoResponse photo = photoService.download(id);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(photo.getType()))

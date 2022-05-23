@@ -45,15 +45,17 @@ public class PhotoRepositoryImpl implements PhotoRepository {
     @Override
     public Optional<PhotoEntity> findById(String id) throws IOException {
         GridFSFile gridFsFile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
-        PhotoEntity photo = new PhotoEntity();
+        PhotoEntity photo = null;
 
         if (gridFsFile != null && gridFsFile.getMetadata() != null) {
+            photo = new PhotoEntity();
             photo.setId(gridFsFile.getId().toString());
             photo.setName(gridFsFile.getFilename());
             photo.setType(gridFsFile.getMetadata().get("_contentType").toString());
             photo.setSize(gridFsFile.getMetadata().get("size").toString());
             photo.setPhoto(IOUtils.toByteArray(operations.getResource(gridFsFile).getInputStream()));
         }
-        return Optional.of(photo);
+
+        return Optional.ofNullable(photo);
     }
 }
