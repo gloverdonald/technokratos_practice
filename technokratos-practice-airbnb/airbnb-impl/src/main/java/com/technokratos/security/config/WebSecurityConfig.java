@@ -1,10 +1,15 @@
 package com.technokratos.security.config;
 
+import com.technokratos.security.details.UserDetailsServiceImpl;
 import com.technokratos.security.filter.TokenAuthorizationFilter;
+import com.technokratos.service.impl.TokenAuthorizationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,7 +20,10 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import java.util.Collections;
 
 @Configuration
 @RequiredArgsConstructor
@@ -23,7 +31,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @PropertySource("classpath:application.properties")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     private static final String[] PERMIT_ALL = {
             "/api/v1/auth/sign-in",
             "/api/v1/auth/sign-up",
@@ -31,7 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/v1/email/confirm/**"
     };
 
-    private final TokenAuthorizationFilter authorizationFilter;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final TokenAuthorizationServiceImpl tokenAuthorizationService;
     private final OAuthProperties oAuthProperties;
 
     @Override
@@ -46,7 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PERMIT_ALL).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(authorizationFilter, BasicAuthenticationFilter.class)
+                .addFilterBefore(tokenAuthorizationFilter(), BasicAuthenticationFilter.class)
+                .authenticationProvider(authenticationProvider())
                 .oauth2Login();
     }
 
@@ -70,6 +79,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .scope()
                 .build();
         return new InMemoryClientRegistrationRepository(registration);
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        PreAuthenticatedAuthenticationProvider authenticationProvider = new PreAuthenticatedAuthenticationProvider();
+        authenticationProvider.setPreAuthenticatedUserDetailsService(userDetailsService);
+        authenticationProvider.setThrowExceptionWhenTokenRejected(false);
+        return authenticationProvider;
+    }
+
+    @Override
+    protected AuthenticationManager authenticationManager() {
+        return new ProviderManager(Collections.singletonList(authenticationProvider()));
+    }
+
+    public TokenAuthorizationFilter tokenAuthorizationFilter() {
+        return new TokenAuthorizationFilter(tokenAuthorizationService);
     }
 }
 
