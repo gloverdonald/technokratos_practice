@@ -9,6 +9,12 @@ dependencies {
     implementation 'org.freemarker:freemarker:2.3.31'
     implementation 'javax.mail:mail:1.4.7'
     implementation group: 'org.springframework', name: 'spring-context-support', version: '5.3.18'
+    implementation group: 'org.springframework', name: 'spring-context-support', version: '5.3.18'
+    implementation group: 'org.springframework.data', name: 'spring-data-mongodb', version: '3.3.4'
+    implementation group: 'org.mongodb', name: 'mongo-java-driver', version: '3.12.11'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+    implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+    implementation group: 'org.hibernate.ogm', name: 'hibernate-ogm-mongodb', version: '5.4.1.Final'
 
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
@@ -23,6 +29,8 @@ dependencies {
     implementation 'org.springframework.security:spring-security-web:5.6.3'
     implementation 'org.springframework.security:spring-security-config:5.6.3'
 
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'commons-io:commons-io:2.11.0'
 }
 
 sourceSets {
