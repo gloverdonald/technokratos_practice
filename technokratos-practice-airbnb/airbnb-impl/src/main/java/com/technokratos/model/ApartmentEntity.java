@@ -43,4 +43,8 @@ public class ApartmentEntity extends AbstractEntity {
 
     @OneToOne(mappedBy = "apartment")
     private AvailabilityEntity availability;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
+    private List<ApartmentPhotoEntity> photos;
 }
