@@ -1,15 +1,12 @@
 package com.technokratos.api;
 
-import com.technokratos.dto.request.LogoutRequest;
 import com.technokratos.dto.request.LoginRequest;
 import com.technokratos.dto.request.RegistrationRequest;
 import com.technokratos.dto.request.TokenRefreshRequest;
 import com.technokratos.dto.response.TokensResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -28,4 +25,7 @@ public interface AuthApi {
     @ResponseStatus(HttpStatus.OK)
     TokensResponse refresh(@RequestBody TokenRefreshRequest request);
 
+    @GetMapping("/oauth/token")
+    @ResponseStatus(HttpStatus.OK)
+    TokensResponse getOAuthTokens(Authentication authentication);
 }
