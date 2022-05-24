@@ -51,4 +51,7 @@ public class UserEntity extends AbstractEntity {
 
     @Builder.Default
     private Boolean deleted = false;
+
+    @Column(name = "avatar_id")
+    private String avatarId;
 }
