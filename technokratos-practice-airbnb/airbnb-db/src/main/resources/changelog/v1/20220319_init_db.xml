@@ -27,17 +27,17 @@
             </column>
             <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
-            <column name="price" type="uuid"/>
+            <column name="price" type="integer"/>
             <column name="description_long" type="VARCHAR(5100)"/>
             <column name="description_short" type="VARCHAR(255)"/>
             <column name="owner_id" type="uuid">
-                <constraints nullable="false" foreignKeyName="fk_apartment_owner" references="account(id)"/>
+                <constraints foreignKeyName="fk_apartment_owner" references="account(id)"/>
             </column>
         </createTable>
 
         <createTable tableName="apartment_address">
             <column name="id" type="uuid">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_apartment_address"/>
+                <constraints primaryKey="true" primaryKeyName="pk_apartment_address"/>
             </column>
             <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
@@ -46,15 +46,16 @@
             <column name="city" type="VARCHAR(255)"/>
             <column name="street" type="VARCHAR(255)"/>
             <column name="house_number" type="VARCHAR(255)"/>
+            <column name="flat_number" type="VARCHAR(255)"/>
             <column name="postal_code" type="VARCHAR(255)"/>
             <column name="apartment_id" type="uuid">
-                <constraints nullable="false" foreignKeyName="fk_address_apartment" references="apartment(id)"/>
+                <constraints  foreignKeyName="fk_address_apartment" references="apartment(id)"/>
             </column>
         </createTable>
 
         <createTable tableName="apartment_review">
             <column name="id" type="uuid">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_apartment_review"/>
+                <constraints  primaryKey="true" primaryKeyName="pk_apartment_review"/>
             </column>
             <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
             <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE" defaultValueComputed="NOW()"/>
