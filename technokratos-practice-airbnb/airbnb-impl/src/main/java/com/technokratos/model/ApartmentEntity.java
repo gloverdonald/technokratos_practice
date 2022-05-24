@@ -15,7 +15,6 @@ import java.util.List;
 @ToString
 @Table(name = "apartment")
 public class ApartmentEntity extends AbstractEntity {
-
     private Integer price;
 
     @Column(name = "description_long")
@@ -35,8 +34,9 @@ public class ApartmentEntity extends AbstractEntity {
     @OneToOne(mappedBy = "apartment")
     private ApartmentAddressEntity address;
 
-    @OneToOne(mappedBy = "apartment")
-    private ApartmentReviewEntity review;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
+    private List<ApartmentReviewEntity> reviews;
 
     @OneToOne(mappedBy = "apartment")
     private ApartmentInfoEntity info;
@@ -47,4 +47,7 @@ public class ApartmentEntity extends AbstractEntity {
     @ToString.Exclude
     @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
     private List<ApartmentPhotoEntity> photos;
+
+    @Builder.Default
+    private Boolean deleted = false;
 }

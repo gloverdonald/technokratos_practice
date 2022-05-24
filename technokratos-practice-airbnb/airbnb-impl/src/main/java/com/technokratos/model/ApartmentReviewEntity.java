@@ -13,12 +13,14 @@ import javax.persistence.*;
 @ToString
 @Table(name = "apartment_review")
 public class ApartmentReviewEntity extends AbstractEntity {
-
     private Integer rating;
 
     private String comment;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "apartment_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "apartment_id")
     private ApartmentEntity apartment;
+
+    @Builder.Default
+    private Boolean deleted = false;
 }

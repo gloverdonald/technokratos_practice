@@ -15,7 +15,6 @@ import java.sql.Date;
 @ToString
 @Table(name = "booking")
 public class BookingEntity extends AbstractEntity{
-
     @Column(name = "date_in")
     private Date dateIn;
 
@@ -29,4 +28,7 @@ public class BookingEntity extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private UserEntity customer;
+
+    @Builder.Default
+    private Boolean deleted = false;
 }
