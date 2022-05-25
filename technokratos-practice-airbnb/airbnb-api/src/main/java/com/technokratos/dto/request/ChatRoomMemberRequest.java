@@ -12,6 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatRoomMemberRequest {
+
     private UUID memberId;
 
     private UUID chatRoomId;

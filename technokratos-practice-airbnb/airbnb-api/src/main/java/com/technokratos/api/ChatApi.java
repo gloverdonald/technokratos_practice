@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/chat")
@@ -19,11 +20,11 @@ public interface ChatApi<PRINCIPAL> {
 
     @PostMapping("/messages")
     @ResponseStatus(HttpStatus.CREATED)
-    MessageResponse createMessage(@RequestBody MessageRequest message);
+    MessageResponse createMessage(@Valid @RequestBody MessageRequest message);
 
     @PutMapping("/messages/{id}")
     @ResponseStatus(HttpStatus.OK)
-    MessageResponse updateMessage(@PathVariable("id") UUID id, @RequestBody MessageRequest message,
+    MessageResponse updateMessage(@PathVariable("id") UUID id, @Valid @RequestBody MessageRequest message,
                                   @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
     @DeleteMapping("/messages/{id}")

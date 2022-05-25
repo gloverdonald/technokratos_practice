@@ -4,6 +4,8 @@ import com.technokratos.dto.request.LoginRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequestMapping("/api/v1/email/confirm")
 public interface EmailApi {
     @GetMapping("/{confirm-code}")
@@ -12,5 +14,5 @@ public interface EmailApi {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    void getConfirmationToken(@RequestBody LoginRequest userRequest);
+    void getConfirmationToken(@Valid @RequestBody LoginRequest userRequest);
 }

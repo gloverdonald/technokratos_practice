@@ -16,6 +16,7 @@ import java.util.UUID;
 
 @RequestMapping("/api/v1/apartments")
 public interface ApartmentApi<PRINCIPAL> {
+<<<<<<< technokratos-practice-airbnb/airbnb-api/src/main/java/com/technokratos/api/ApartmentApi.java
     @PostMapping(value = "/add")
     @ResponseStatus(HttpStatus.CREATED)
     ApartmentResponse create(@RequestBody ApartmentRequest apartmentRequest);
@@ -32,10 +33,14 @@ public interface ApartmentApi<PRINCIPAL> {
     @PostMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     ApartmentResponse update(@PathVariable UUID id, @RequestBody ApartmentRequest apartmentRequest, @AuthenticationPrincipal PRINCIPAL userPrincipal);
+=======
+>>>>>>> technokratos-practice-airbnb/airbnb-api/src/main/java/com/technokratos/api/ApartmentApi.java
 
     @PostMapping("/{id}/photo")
     @ResponseStatus(HttpStatus.OK)
-    String uploadPhoto(@RequestParam("photo") MultipartFile photo, @PathVariable("id") UUID apartmentId);
+    String uploadPhoto(@RequestParam("photo") MultipartFile photo,
+                       @PathVariable("id") UUID apartmentId,
+                       @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
     @GetMapping("/{id}/photos")
     @ResponseStatus(HttpStatus.OK)
@@ -43,11 +48,13 @@ public interface ApartmentApi<PRINCIPAL> {
 
     @DeleteMapping("/{id}/photo/{photoId}")
     @ResponseStatus(HttpStatus.OK)
-    void deletePhoto(@PathVariable("id") UUID apartmentId, @PathVariable("photoId") String photoId);
+    void deletePhoto(@PathVariable("id") UUID apartmentId,
+                     @PathVariable("photoId") String photoId,
+                     @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
     @DeleteMapping("/{id}/photos")
     @ResponseStatus(HttpStatus.OK)
-    void deletePhotos(@PathVariable("id") UUID apartmentId);
+    void deletePhotos(@PathVariable("id") UUID apartmentId, @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
     @PostMapping(value = "/{id}/availability")
     @ResponseStatus(HttpStatus.CREATED)

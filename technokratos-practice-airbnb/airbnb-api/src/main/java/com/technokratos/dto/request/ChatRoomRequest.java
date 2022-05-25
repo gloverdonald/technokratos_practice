@@ -10,5 +10,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatRoomRequest {
+
     private String name;
 }

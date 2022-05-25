@@ -34,6 +34,8 @@ subprojects {
         implementation 'com.zaxxer:HikariCP:5.0.1'
         implementation 'org.postgresql:postgresql:42.3.3'
         implementation "org.reflections:reflections:0.9.12"
+        implementation 'org.hibernate:hibernate-validator:6.0.16.Final'
+        implementation group: 'org.passay', name: 'passay', version: '1.6.1'
         compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
         compileOnly 'org.projectlombok:lombok:1.18.22'
         annotationProcessor 'org.projectlombok:lombok:1.18.22'
