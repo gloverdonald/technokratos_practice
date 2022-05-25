@@ -14,7 +14,6 @@ import javax.persistence.*;
 @ToString
 @Table(name = "apartment_info")
 public class ApartmentInfoEntity extends AbstractEntity {
-
     private Boolean parking;
 
     private Boolean pool;
@@ -37,4 +36,7 @@ public class ApartmentInfoEntity extends AbstractEntity {
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "apartment_id", referencedColumnName = "id")
     private ApartmentEntity apartment;
+
+    @Builder.Default
+    private Boolean deleted = false;
 }

@@ -1,5 +1,11 @@
 package com.technokratos.api;
 
+import com.technokratos.dto.request.ApartmentRequest;
+import com.technokratos.dto.request.AvailabilityRequest;
+import com.technokratos.dto.request.BookingRequest;
+import com.technokratos.dto.response.ApartmentResponse;
+import com.technokratos.dto.response.AvailabilityResponse;
+import com.technokratos.dto.response.BookingResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +16,25 @@ import java.util.UUID;
 
 @RequestMapping("/api/v1/apartments")
 public interface ApartmentApi<PRINCIPAL> {
+<<<<<<< technokratos-practice-airbnb/airbnb-api/src/main/java/com/technokratos/api/ApartmentApi.java
+    @PostMapping(value = "/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    ApartmentResponse create(@RequestBody ApartmentRequest apartmentRequest);
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    ApartmentResponse get(@PathVariable UUID id);
+
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    void delete(@PathVariable UUID id, @AuthenticationPrincipal PRINCIPAL userPrincipal);
+
+    @PostMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    ApartmentResponse update(@PathVariable UUID id, @RequestBody ApartmentRequest apartmentRequest, @AuthenticationPrincipal PRINCIPAL userPrincipal);
+=======
+>>>>>>> technokratos-practice-airbnb/airbnb-api/src/main/java/com/technokratos/api/ApartmentApi.java
 
     @PostMapping("/{id}/photo")
     @ResponseStatus(HttpStatus.OK)
@@ -31,4 +56,23 @@ public interface ApartmentApi<PRINCIPAL> {
     @ResponseStatus(HttpStatus.OK)
     void deletePhotos(@PathVariable("id") UUID apartmentId, @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
+    @PostMapping(value = "/{id}/availability")
+    @ResponseStatus(HttpStatus.CREATED)
+    AvailabilityResponse createAvailability(@PathVariable("id") UUID apartmentId,
+                                            @RequestBody AvailabilityRequest availabilityRequest,
+                                            @AuthenticationPrincipal PRINCIPAL userPrincipal);
+
+    @GetMapping(value = "/{id}/availabilities")
+    @ResponseStatus(HttpStatus.OK)
+    List<AvailabilityResponse> getAllAvailabilities(@PathVariable("id") UUID apartmentId);
+
+    @DeleteMapping(value = "/{id}/availability")
+    @ResponseStatus(HttpStatus.OK)
+    void deleteAvailability(@PathVariable("id") UUID availabilityId, @AuthenticationPrincipal PRINCIPAL userPrincipal);
+
+
+    @PostMapping(value = "/booking")
+    @ResponseStatus(HttpStatus.CREATED)
+    BookingResponse addBooking(@RequestBody BookingRequest bookingRequest,
+                               @AuthenticationPrincipal PRINCIPAL userPrincipal);
 }

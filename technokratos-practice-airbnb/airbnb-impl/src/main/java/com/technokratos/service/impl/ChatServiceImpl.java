@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.technokratos.dto.enums.Role.ADMIN;
@@ -52,9 +53,8 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public MessageResponse getMessageById(UUID id, UserDetails userDetails) {
-        UserEntity currentUser = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(UserNotFoundException::new);
         MessageEntity messageEntity = messageRepository.findById(id).orElseThrow(MessageFoundException::new);
-        if (!messageEntity.getAuthor().getEmail().equals(currentUser.getEmail()) && !currentUser.getRoles().contains(ADMIN)) {
+        if (isUserAuthorOrAdmin(messageEntity.getAuthor().getEmail(), userDetails)) {
             throw new AccessDeniedException();
         }
         return messageMapper.toResponse(messageEntity);
@@ -62,9 +62,8 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void deleteMessageById(UUID id, UserDetails userDetails) {
-        UserEntity currentUser = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(UserNotFoundException::new);
         MessageEntity messageEntity = messageRepository.findById(id).orElseThrow(MessageFoundException::new);
-        if (!messageEntity.getAuthor().getEmail().equals(currentUser.getEmail()) && !currentUser.getRoles().contains(ADMIN)) {
+        if (isUserAuthorOrAdmin(messageEntity.getAuthor().getEmail(), userDetails)) {
             throw new AccessDeniedException();
         }
         messageEntity.setDeleted(true);
@@ -72,9 +71,8 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public MessageResponse updateMessage(UUID id, MessageRequest messageRequest, UserDetails userDetails) {
-        UserEntity currentUser = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(UserNotFoundException::new);
         MessageEntity messageEntity = messageRepository.findById(id).orElseThrow(MessageFoundException::new);
-        if (!messageEntity.getAuthor().getEmail().equals(currentUser.getEmail()) && !currentUser.getRoles().contains(ADMIN)) {
+        if (isUserAuthorOrAdmin(messageEntity.getAuthor().getEmail(), userDetails)) {
             throw new AccessDeniedException();
         }
         if (messageRequest.getText() != null) {
@@ -99,10 +97,8 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ChatRoomResponse getChatRoomById(UUID id, UserDetails userDetails) {
-        UserEntity currentUser = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(UserNotFoundException::new);
         ChatRoomEntity chatRoom = chatRoomRepository.findById(id).orElseThrow(ChatRoomNotFoundException::new);
-        if (chatRoom.getMembers().stream().noneMatch(member -> member.getEmail().equals(currentUser.getEmail()))
-                && !currentUser.getRoles().contains(ADMIN)) {
+        if (!isUserMemberOrAdmin(chatRoom.getMembers(), userDetails)) {
             throw new AccessDeniedException();
         }
         return chatRoomMapper.toResponse(chatRoom);
@@ -110,10 +106,8 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void deleteChatRoomById(UUID id, UserDetails userDetails) {
-        UserEntity currentUser = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(UserNotFoundException::new);
         ChatRoomEntity chatRoom = chatRoomRepository.findById(id).orElseThrow(ChatRoomNotFoundException::new);
-        if (chatRoom.getMembers().stream().noneMatch(member -> member.getEmail().equals(currentUser.getEmail()))
-                && !currentUser.getRoles().contains(ADMIN)) {
+        if (!isUserMemberOrAdmin(chatRoom.getMembers(), userDetails)) {
             throw new AccessDeniedException();
         }
         chatRoom.setDeleted(true);
@@ -121,10 +115,8 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ChatRoomResponse updateChatRoom(UUID id, ChatRoomRequest chatRoomRequest, UserDetails userDetails) {
-        UserEntity currentUser = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(UserNotFoundException::new);
         ChatRoomEntity chatRoom = chatRoomRepository.findById(id).orElseThrow(ChatRoomNotFoundException::new);
-        if (chatRoom.getMembers().stream().noneMatch(member -> member.getEmail().equals(currentUser.getEmail()))
-                && !currentUser.getRoles().contains(ADMIN)) {
+        if (!isUserMemberOrAdmin(chatRoom.getMembers(), userDetails)) {
             throw new AccessDeniedException();
         }
         if (chatRoomRequest.getName() != null) {
@@ -141,5 +133,15 @@ public class ChatServiceImpl implements ChatService {
                 .orElseThrow(UserNotFoundException::new);
         chatRoom.getMembers().add(user);
         return chatRoomMapper.toResponse(chatRoomRepository.save(chatRoom));
+    }
+
+    private Boolean isUserMemberOrAdmin(List<UserEntity> members, UserDetails userDetails) {
+        return userDetails.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("ADMIN"))
+                || members.stream().anyMatch(member -> member.getEmail().equals(userDetails.getUsername()));
+    }
+
+    private Boolean isUserAuthorOrAdmin(String ownerEmail, UserDetails userDetails) {
+        return userDetails.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("ADMIN"))
+                || userDetails.getUsername().equals(ownerEmail);
     }
 }
