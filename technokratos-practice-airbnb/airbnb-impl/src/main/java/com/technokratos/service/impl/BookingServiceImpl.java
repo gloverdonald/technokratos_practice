@@ -20,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,7 +76,7 @@ public class BookingServiceImpl implements BookingService {
         ApartmentEntity apartment = apartmentRepository
                 .findById(bookingRequest.getApartmentId()).orElseThrow(ApartmentNotFoundException::new);
         UserEntity customer = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(UserNotFoundException::new);
-        AvailabilityEntity availability = availabilityRepository.findByApartment_IdAndDeletedIsFalseAndDateFromBeforeAndDateToAfter(
+        AvailabilityEntity availability = availabilityRepository.findByApartment_IdAndDeletedIsFalseAndDateFromLessThanEqualAndDateToGreaterThanEqual(
                 bookingRequest.getApartmentId(),
                 bookingRequest.getDateIn(),
                 bookingRequest.getDateOut()
@@ -82,17 +84,28 @@ public class BookingServiceImpl implements BookingService {
         BookingEntity booking = bookingMapper.toEntity(bookingRequest);
         booking.setCustomer(customer);
         booking.setApartment(apartment);
-        if (availability.getDateFrom() != bookingRequest.getDateIn()) {
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(bookingRequest.getDateIn());
+        c.add(Calendar.DATE, -1);
+        Date dateInMinusOneDay = c.getTime();
+
+        if (!availability.getDateFrom().after(dateInMinusOneDay)) {
             AvailabilityEntity newAvailabilityEntity = AvailabilityEntity.builder()
                     .dateFrom(availability.getDateFrom())
                     .apartment(availability.getApartment())
-                    .dateTo(bookingRequest.getDateIn())
+                    .dateTo(dateInMinusOneDay)
                     .build();
             availabilityRepository.save(newAvailabilityEntity);
         }
-        if (bookingRequest.getDateOut() != availability.getDateTo()) {
+
+        c.setTime(bookingRequest.getDateOut());
+        c.add(Calendar.DATE, 1);
+        Date dateOutPlusOneDay = c.getTime();
+
+        if (!availability.getDateTo().before(dateOutPlusOneDay)) {
             AvailabilityEntity newAvailabilityEntity = AvailabilityEntity.builder()
-                    .dateFrom(bookingRequest.getDateOut())
+                    .dateFrom(dateOutPlusOneDay)
                     .apartment(availability.getApartment())
                     .dateTo(availability.getDateTo())
                     .build();
