@@ -36,7 +36,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/v1/auth/sign-up",
             "/api/v1/auth/refresh",
             "/api/v1/email/confirm/**",
-            "/api/v1/photo/**"
+            "/api/v1/photo/**",
+            "/account-swagger/api-docs",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/swagger-resources/**",
+            "/webjars/**",
+            "/swagger-ui/**"
     };
 
     private final UserDetailsServiceImpl userDetailsService;

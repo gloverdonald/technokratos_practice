@@ -1,5 +1,7 @@
 package com.technokratos.dto.request;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,10 +14,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ApiModel(value = "Доступный для бронирования период")
 public class AvailabilityRequest {
+
+    @ApiModelProperty(value = "Дата начала", example = "2022-04-25")
     private Date dateFrom;
 
+    @ApiModelProperty(value = "Дата конца", example = "2022-04-25")
     private Date dateTo;
 
+    @ApiModelProperty(value = "Идентификатор апартамента", example = "43ab999e-1ff7-47e7-b809-775272c38ec9")
     private UUID apartmentId;
+
 }
