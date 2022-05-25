@@ -1,7 +1,6 @@
 package com.technokratos.service.impl;
 
 import com.technokratos.dto.request.ApartmentRequest;
-import com.technokratos.dto.request.ApartmentSearchRequest;
 import com.technokratos.dto.response.ApartmentResponse;
 import com.technokratos.exception.*;
 import com.technokratos.mapper.ApartmentMapper;
@@ -22,7 +21,6 @@ import java.util.UUID;
 @Service
 public class ApartmentServiceImpl implements ApartmentService {
     private final ApartmentInfoRepository apartmentInfoRepository;
-    private final BookingRepository bookingRepository;
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;
     private final ApartmentRepository apartmentRepository;
@@ -48,11 +46,6 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Override
     public ApartmentResponse get(UUID id) {
         return apartmentMapper.toResponse(apartmentRepository.findById(id).orElseThrow(ApartmentNotFoundException::new));
-    }
-
-    @Override
-    public Boolean isAvailable(ApartmentSearchRequest searchDto) {
-        return bookingRepository.isAvailable(searchDto.getId(), searchDto.getDateStart(), searchDto.getDateEnd());
     }
 
     @Override

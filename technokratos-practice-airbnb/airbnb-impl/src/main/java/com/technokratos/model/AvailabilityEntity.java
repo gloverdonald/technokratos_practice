@@ -14,7 +14,7 @@ import java.sql.Date;
 @Entity
 @ToString
 @Table(name = "availability")
-public class AvailabilityEntity extends AbstractEntity{
+public class AvailabilityEntity extends AbstractEntity {
 
     @Column(name = "date_from")
     private Date dateFrom;
@@ -22,7 +22,10 @@ public class AvailabilityEntity extends AbstractEntity{
     @Column(name = "date_to")
     private Date dateTo;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "apartment_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "apartment_id")
     private ApartmentEntity apartment;
+
+    @Builder.Default
+    private Boolean deleted = false;
 }

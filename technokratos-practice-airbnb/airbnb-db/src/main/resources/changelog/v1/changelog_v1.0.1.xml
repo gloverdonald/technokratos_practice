@@ -15,4 +15,5 @@
     <include file="20220511-apartment-photo.xml" relativeToChangelogFile="true"/>
     <include file="20220522-chat.xml" relativeToChangelogFile="true"/>
     <include file="20220524-add-delete.xml" relativeToChangelogFile="true"/>
+    <include file="20220524-add-delete2.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

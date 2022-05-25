@@ -1,8 +1,11 @@
 package com.technokratos.api;
 
 import com.technokratos.dto.request.ApartmentRequest;
-import com.technokratos.dto.request.ApartmentSearchRequest;
+import com.technokratos.dto.request.AvailabilityRequest;
+import com.technokratos.dto.request.BookingRequest;
 import com.technokratos.dto.response.ApartmentResponse;
+import com.technokratos.dto.response.AvailabilityResponse;
+import com.technokratos.dto.response.BookingResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +24,6 @@ public interface ApartmentApi<PRINCIPAL> {
     @ResponseStatus(HttpStatus.OK)
     ApartmentResponse get(@PathVariable UUID id);
 
-    @PostMapping("/availability")
-    @ResponseStatus(HttpStatus.OK)
-    Boolean checkAvailability(@RequestBody ApartmentSearchRequest searchDto);
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -48,4 +48,24 @@ public interface ApartmentApi<PRINCIPAL> {
     @DeleteMapping("/{id}/photos")
     @ResponseStatus(HttpStatus.OK)
     void deletePhotos(@PathVariable("id") UUID apartmentId);
+
+    @PostMapping(value = "/{id}/availability")
+    @ResponseStatus(HttpStatus.CREATED)
+    AvailabilityResponse createAvailability(@PathVariable("id") UUID apartmentId,
+                                            @RequestBody AvailabilityRequest availabilityRequest,
+                                            @AuthenticationPrincipal PRINCIPAL userPrincipal);
+
+    @GetMapping(value = "/{id}/availabilities")
+    @ResponseStatus(HttpStatus.OK)
+    List<AvailabilityResponse> getAllAvailabilities(@PathVariable("id") UUID apartmentId);
+
+    @DeleteMapping(value = "/{id}/availability")
+    @ResponseStatus(HttpStatus.OK)
+    void deleteAvailability(@PathVariable("id") UUID availabilityId, @AuthenticationPrincipal PRINCIPAL userPrincipal);
+
+
+    @PostMapping(value = "/booking")
+    @ResponseStatus(HttpStatus.CREATED)
+    BookingResponse addBooking(@RequestBody BookingRequest bookingRequest,
+                               @AuthenticationPrincipal PRINCIPAL userPrincipal);
 }

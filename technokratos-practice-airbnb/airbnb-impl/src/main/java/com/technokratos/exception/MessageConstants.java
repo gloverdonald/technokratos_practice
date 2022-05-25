@@ -12,5 +12,6 @@ public interface MessageConstants {
     String APARTMENT_NOT_FOUND = "Apartment Not Found";
     String APARTMENT_PHOTO_NOT_FOUND = "Apartment Photo Not Found";
     String APARTMENT_INFO_NOT_FOUND = "Apartment Indo Not Found";
+    String AVAILABILITY_INFO_NOT_FOUND = "Availability Indo Not Found";
 }
 

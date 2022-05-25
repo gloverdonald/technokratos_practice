@@ -1,20 +1,21 @@
 package com.technokratos.dto.request;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.sql.Date;
+import java.util.UUID;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
-public class ApartmentSearchRequest {
-    private Long id;
+public class BookingRequest {
+    private Date dateIn;
 
-    private Date dateStart;
+    private Date dateOut;
 
-    private Date dateEnd;
+    private UUID apartmentId;
 }
