@@ -66,7 +66,7 @@ public interface ChatApi<PRINCIPAL> {
                     response = ChatRoomResponse.class)})
     @PostMapping("/chat-room")
     @ResponseStatus(HttpStatus.CREATED)
-    ChatRoomResponse createChatRoom(@ApiParam(value = "Данные для диалога") @RequestBody ChatRoomRequest room);
+    ChatRoomResponse createChatRoom(@ApiParam(value = "Данные для диалога") @Valid @RequestBody ChatRoomRequest room);
 
     @ApiOperation(value = "Обновление диалога", produces = "application/json")
     @ApiResponses(value = {
@@ -75,7 +75,8 @@ public interface ChatApi<PRINCIPAL> {
     @PutMapping("/chat-room/{id}")
     @ResponseStatus(HttpStatus.OK)
     ChatRoomResponse updateChatRoom(@ApiParam(value = "Идентификатор диалога") @PathVariable("id") UUID id,
-                                    @ApiParam(value = "Данные для обновления диалога") @RequestBody ChatRoomRequest room,
+                                    @ApiParam(value = "Данные для обновления диалога")
+                                    @Valid @RequestBody ChatRoomRequest room,
                                     @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
     @ApiOperation(value = "Удаление диалога")
@@ -91,5 +92,5 @@ public interface ChatApi<PRINCIPAL> {
     @PostMapping("/chat-room/add-member")
     @ResponseStatus(HttpStatus.OK)
     ChatRoomResponse addChatRoomMember(@ApiParam(value = "Данные участника диалога")
-                                       @RequestBody ChatRoomMemberRequest chatRoomMemberRequest);
+                                       @Valid @RequestBody ChatRoomMemberRequest chatRoomMemberRequest);
 }

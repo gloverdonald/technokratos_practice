@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotBlank;
+
 @SuperBuilder
 @Data
 @AllArgsConstructor
@@ -15,5 +17,6 @@ import lombok.experimental.SuperBuilder;
 public class TokenRefreshRequest {
 
     @ApiModelProperty(value = "Refresh токен")
+    @NotBlank(message = "Нужен токен")
     private String refreshToken;
 }

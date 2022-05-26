@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import java.sql.Date;
 import java.util.UUID;
 
@@ -17,9 +19,11 @@ import java.util.UUID;
 @ApiModel(value = "Бронирование")
 public class BookingRequest {
 
+    @FutureOrPresent
     @ApiModelProperty(value = "Дата въезда", example = "2022-04-25")
     private Date dateIn;
 
+    @Future
     @ApiModelProperty(value = "Дата выезда", example = "2022-04-25")
     private Date dateOut;
 
