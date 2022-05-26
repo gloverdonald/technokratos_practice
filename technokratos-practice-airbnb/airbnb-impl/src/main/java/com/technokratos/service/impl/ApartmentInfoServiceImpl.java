@@ -38,33 +38,7 @@ public class ApartmentInfoServiceImpl implements ApartmentInfoService {
     @Override
     public ApartmentInfoResponse update(UUID apartmentId, ApartmentInfoRequest apartmentInfoRequest) {
         ApartmentInfoEntity apartmentInfo = apartmentInfoRepository.findByApartment_Id(apartmentId).orElseThrow(ApartmentInfoNotFoundException::new);
-        if (apartmentInfoRequest.getConditioner() != null) {
-            apartmentInfo.setConditioner(apartmentInfoRequest.getConditioner());
-        }
-        if (apartmentInfoRequest.getGarage() != null) {
-            apartmentInfo.setGarage(apartmentInfoRequest.getGarage());
-        }
-        if (apartmentInfoRequest.getHeat() != null) {
-            apartmentInfo.setHeat(apartmentInfoRequest.getHeat());
-        }
-        if (apartmentInfoRequest.getIron() != null) {
-            apartmentInfo.setIron(apartmentInfoRequest.getIron());
-        }
-        if (apartmentInfoRequest.getMicrowave() != null) {
-            apartmentInfo.setMicrowave(apartmentInfoRequest.getMicrowave());
-        }
-        if (apartmentInfoRequest.getParking() != null) {
-            apartmentInfo.setParking(apartmentInfoRequest.getParking());
-        }
-        if (apartmentInfoRequest.getRefrigerator() != null) {
-            apartmentInfo.setRefrigerator(apartmentInfoRequest.getRefrigerator());
-        }
-        if (apartmentInfoRequest.getPool() != null) {
-            apartmentInfo.setPool(apartmentInfoRequest.getPool());
-        }
-        if (apartmentInfoRequest.getWashingMachine() != null) {
-            apartmentInfo.setWashingMachine(apartmentInfoRequest.getWashingMachine());
-        }
+        apartmentInfoMapper.update(apartmentInfo, apartmentInfoRequest);
         return apartmentInfoMapper.toResponse(apartmentInfoRepository.save(apartmentInfo));
     }
 }

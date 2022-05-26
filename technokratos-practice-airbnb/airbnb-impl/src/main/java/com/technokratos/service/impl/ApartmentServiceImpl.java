@@ -63,21 +63,7 @@ public class ApartmentServiceImpl implements ApartmentService {
         if (!isUserOwnerOrAdmin(apartment.getOwner().getEmail(), userDetails)) {
             throw new AccessDeniedException();
         }
-        if (apartmentRequest.getDescriptionLong() != null) {
-            apartment.setDescriptionLong(apartmentRequest.getDescriptionLong());
-        }
-        if (apartmentRequest.getDescriptionShort() != null) {
-            apartment.setDescriptionShort(apartmentRequest.getDescriptionShort());
-        }
-        if (apartmentRequest.getPrice() != null) {
-            apartment.setPrice(apartmentRequest.getPrice());
-        }
-        if (apartmentRequest.getInfoId() != null) {
-            apartment.setInfo(apartmentInfoRepository.findById(apartmentRequest.getInfoId()).orElseThrow(ApartmentInfoNotFoundException::new));
-        }
-        if (apartmentRequest.getAddressId() != null) {
-            apartment.setAddress(addressRepository.findById(apartmentRequest.getAddressId()).orElseThrow(AddressNotFoundException::new));
-        }
+        apartmentMapper.update(apartment, apartmentRequest);
         return apartmentMapper.toResponse(apartmentRepository.save(apartment));
     }
 

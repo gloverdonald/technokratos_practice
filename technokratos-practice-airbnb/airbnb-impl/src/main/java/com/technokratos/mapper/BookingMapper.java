@@ -1,10 +1,13 @@
 package com.technokratos.mapper;
 
+import com.technokratos.dto.request.AvailabilityRequest;
 import com.technokratos.dto.request.BookingRequest;
 import com.technokratos.dto.response.BookingResponse;
+import com.technokratos.model.AvailabilityEntity;
 import com.technokratos.model.BookingEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 
 @Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, uses = ApartmentMapper.class)
@@ -17,4 +20,6 @@ public interface BookingMapper {
     BookingEntity toEntity(BookingRequest bookingRequest);
 
     BookingResponse toResponse(BookingEntity bookingEntity);
+
+    void update(@MappingTarget BookingEntity entity, BookingRequest bookingRequest);
 }
