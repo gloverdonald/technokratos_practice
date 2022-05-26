@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public interface ApartmentApi<PRINCIPAL> {
                     response = ApartmentResponse.class)})
     @PostMapping(value = "/add")
     @ResponseStatus(HttpStatus.CREATED)
-    ApartmentResponse create(@ApiParam(value = "Данные для адреса") @RequestBody ApartmentRequest apartmentRequest);
+    ApartmentResponse create(@ApiParam(value = "Данные для адреса") @Valid @RequestBody ApartmentRequest apartmentRequest);
 
     @ApiOperation(value = "Получение апартамента", produces = "application/json")
     @ApiResponses(value = {
@@ -39,8 +40,8 @@ public interface ApartmentApi<PRINCIPAL> {
     @ApiOperation(value = "Удаление апартамента")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    void delete(
-            @ApiParam(value = "Идентификатор апартамента") @PathVariable UUID id, @AuthenticationPrincipal PRINCIPAL userPrincipal
+    void delete(@ApiParam(value = "Идентификатор апартамента") @PathVariable UUID id,
+                @AuthenticationPrincipal PRINCIPAL userPrincipal
     );
 
     @ApiOperation(value = "Обновление апартамента", produces = "application/json")
@@ -51,7 +52,7 @@ public interface ApartmentApi<PRINCIPAL> {
     @ResponseStatus(HttpStatus.OK)
     ApartmentResponse update(@ApiParam(value = "Идентификатор апартамента") @PathVariable UUID id,
                              @ApiParam(value = "Данные для обновления апартамента")
-                             @RequestBody ApartmentRequest apartmentRequest,
+                             @Valid @RequestBody ApartmentRequest apartmentRequest,
                              @AuthenticationPrincipal PRINCIPAL userPrincipal
     );
 
@@ -95,7 +96,7 @@ public interface ApartmentApi<PRINCIPAL> {
     AvailabilityResponse createAvailability(@ApiParam(value = "Идентификатор апартамента")
                                             @PathVariable("id") UUID apartmentId,
                                             @ApiParam(value = "Доступный период")
-                                            @RequestBody AvailabilityRequest availabilityRequest,
+                                            @Valid @RequestBody AvailabilityRequest availabilityRequest,
                                             @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
     @ApiOperation(value = "Получение всех доступных периодов для бронирования", produces = "application/json")
@@ -121,7 +122,7 @@ public interface ApartmentApi<PRINCIPAL> {
     @PostMapping(value = "/booking")
     @ResponseStatus(HttpStatus.CREATED)
     BookingResponse addBooking(@ApiParam(value = "Данные бронирования")
-                               @RequestBody BookingRequest bookingRequest,
+                               @Valid @RequestBody BookingRequest bookingRequest,
                                @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
 }

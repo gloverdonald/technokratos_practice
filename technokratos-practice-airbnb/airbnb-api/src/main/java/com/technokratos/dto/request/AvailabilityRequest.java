@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import java.sql.Date;
 import java.util.UUID;
 
@@ -18,8 +20,10 @@ import java.util.UUID;
 public class AvailabilityRequest {
 
     @ApiModelProperty(value = "Дата начала", example = "2022-04-25")
+    @FutureOrPresent
     private Date dateFrom;
 
+    @Future
     @ApiModelProperty(value = "Дата конца", example = "2022-04-25")
     private Date dateTo;
 

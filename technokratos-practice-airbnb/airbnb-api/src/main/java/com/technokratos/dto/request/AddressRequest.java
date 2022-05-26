@@ -46,5 +46,6 @@ public class AddressRequest {
     private String flatNumber;
 
     @ApiModelProperty(value = "Индекс")
+    @NotBlank(message = "Адрес должен иметь почтовый индекс")
     private String postalCode;
 }

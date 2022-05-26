@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotBlank;
+
 @SuperBuilder
 @Data
 @AllArgsConstructor
@@ -15,5 +17,6 @@ import lombok.experimental.SuperBuilder;
 public class ChatRoomRequest {
 
     @ApiModelProperty(value = "Название диалога")
+    @NotBlank(message = "Диалог должен иметь название")
     private String name;
 }
