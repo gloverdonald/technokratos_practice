@@ -39,7 +39,7 @@ public interface AuthApi {
                     response = TokensResponse.class)})
     @PostMapping("/refresh")
     @ResponseStatus(HttpStatus.OK)
-    TokensResponse refresh(@ApiParam(value = "старый refresh токен") @RequestBody TokenRefreshRequest request);
+    TokensResponse refresh(@ApiParam(value = "старый refresh токен") @Valid @RequestBody TokenRefreshRequest request);
 
     @ApiOperation(value = "Получение токенов oauth", produces = "application/json")
     @ApiResponses(value = {
