@@ -17,4 +17,5 @@
     <include file="20220524-add-delete.xml" relativeToChangelogFile="true"/>
     <include file="20220524-add-delete2.xml" relativeToChangelogFile="true"/>
     <include file="20220525-change-type.xml" relativeToChangelogFile="true"/>
+    <include file="20220526-add-columns.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

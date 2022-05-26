@@ -21,6 +21,10 @@ public class ApartmentReviewEntity extends AbstractEntity {
     @JoinColumn(name = "apartment_id")
     private ApartmentEntity apartment;
 
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private UserEntity author;
+
     @Builder.Default
     private Boolean deleted = false;
 }
