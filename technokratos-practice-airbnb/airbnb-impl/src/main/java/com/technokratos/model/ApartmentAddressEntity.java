@@ -14,7 +14,6 @@ import javax.persistence.*;
 @ToString
 @Table(name = "apartment_address")
 public class ApartmentAddressEntity extends AbstractEntity {
-
     private String country;
 
     private String region;
@@ -35,4 +34,7 @@ public class ApartmentAddressEntity extends AbstractEntity {
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "apartment_id", referencedColumnName = "id")
     private ApartmentEntity apartment;
+
+    @Builder.Default
+    private Boolean deleted = false;
 }
