@@ -27,7 +27,7 @@ public class SwaggerConfig {
                 .globalOperationParameters(
                         Collections.singletonList(new ParameterBuilder()
                                 .name(AUTHORIZATION)
-                                .description("JWT Authorization token")
+                                .description("Authorization token")
                                 .modelRef(new ModelRef("string"))
                                 .parameterType("header")
                                 .required(false)
