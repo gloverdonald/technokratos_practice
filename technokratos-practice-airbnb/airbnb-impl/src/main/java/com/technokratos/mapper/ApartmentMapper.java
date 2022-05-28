@@ -5,6 +5,7 @@ import com.technokratos.dto.response.ApartmentResponse;
 import com.technokratos.model.ApartmentEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 
 @Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, uses = UserMapper.class)
@@ -18,4 +19,6 @@ public interface ApartmentMapper {
     ApartmentEntity toEntity(ApartmentRequest apartmentRequest);
 
     ApartmentResponse toResponse(ApartmentEntity apartmentEntity);
+
+    void update(@MappingTarget ApartmentEntity entity, ApartmentRequest apartmentRequest);
 }

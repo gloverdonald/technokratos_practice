@@ -71,23 +71,12 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public MessageResponse updateMessage(UUID id, MessageRequest messageRequest, UserDetails userDetails) {
-        MessageEntity messageEntity = messageRepository.findById(id).orElseThrow(MessageFoundException::new);
-        if (isUserAuthorOrAdmin(messageEntity.getAuthor().getEmail(), userDetails)) {
+        MessageEntity message = messageRepository.findById(id).orElseThrow(MessageFoundException::new);
+        if (isUserAuthorOrAdmin(message.getAuthor().getEmail(), userDetails)) {
             throw new AccessDeniedException();
         }
-        if (messageRequest.getText() != null) {
-            messageEntity.setText(messageRequest.getText());
-        }
-        if (messageRequest.getAuthorId() != null) {
-            UserEntity newAuthor = userRepository.findById(messageRequest.getAuthorId())
-                    .orElseThrow(UserNotFoundException::new);
-            messageEntity.setAuthor(newAuthor);
-        }
-        if (messageRequest.getChatRoomId() != null) {
-            ChatRoomEntity nawChatRoom = chatRoomRepository.findById(messageRequest.getChatRoomId()).orElseThrow(ChatRoomNotFoundException::new);
-            messageEntity.setChatRoom(nawChatRoom);
-        }
-        return messageMapper.toResponse(messageRepository.save(messageEntity));
+        messageMapper.update(message, messageRequest);
+        return messageMapper.toResponse(messageRepository.save(message));
     }
 
     @Override
@@ -119,9 +108,7 @@ public class ChatServiceImpl implements ChatService {
         if (!isUserMemberOrAdmin(chatRoom.getMembers(), userDetails)) {
             throw new AccessDeniedException();
         }
-        if (chatRoomRequest.getName() != null) {
-            chatRoom.setName(chatRoomRequest.getName());
-        }
+        chatRoomMapper.update(chatRoom, chatRoomRequest);
         return chatRoomMapper.toResponse(chatRoomRepository.save(chatRoom));
     }
 

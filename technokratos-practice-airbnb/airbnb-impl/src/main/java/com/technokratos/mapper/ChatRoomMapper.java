@@ -1,10 +1,13 @@
 package com.technokratos.mapper;
 
+import com.technokratos.dto.request.BookingRequest;
 import com.technokratos.dto.request.ChatRoomRequest;
 import com.technokratos.dto.response.ChatRoomResponse;
+import com.technokratos.model.BookingEntity;
 import com.technokratos.model.ChatRoomEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 
 @Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
@@ -15,4 +18,6 @@ public interface ChatRoomMapper {
     ChatRoomEntity toEntity(ChatRoomRequest chatRoomRequest);
 
     ChatRoomResponse toResponse(ChatRoomEntity chatRoomEntity);
+
+    void update(@MappingTarget ChatRoomEntity entity, ChatRoomRequest chatRoomRequest);
 }

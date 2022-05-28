@@ -54,12 +54,7 @@ public class ApartmentReviewServiceImpl implements ApartmentReviewService {
         if (!user.getId().equals(apartmentReview.getAuthor().getId())) {
             throw new AccessDeniedException();
         }
-        if (reviewRequest.getRating() != null) {
-            apartmentReview.setRating(reviewRequest.getRating());
-        }
-        if (reviewRequest.getComment() != null) {
-            apartmentReview.setComment(reviewRequest.getComment());
-        }
+        apartmentReviewMapper.update(apartmentReview, reviewRequest);
         return apartmentReviewMapper.toResponse(apartmentReviewRepository.save(apartmentReview));
     }
 }
