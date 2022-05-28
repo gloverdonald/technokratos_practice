@@ -25,7 +25,7 @@ public class LoginRequest {
 
     @ApiModelProperty(value = "Пароль")
     @NotBlank(message = "Пароль не может быть пустым")
-    @Size(min = 8, max = 100, message = "минимальный размер {min}, максимальный размер {max}")
+    @Size(min = 8, max = 30, message = "минимальный размер {min}, максимальный размер {max}")
     @CustomPassword
     private String password;
 }

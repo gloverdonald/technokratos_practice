@@ -33,6 +33,7 @@ public class ApartmentRequest {
     private String descriptionShort;
 
     @ApiModelProperty(value = "Владелец", example = "c21239e6-6e31-4dc0-894a-64e55be69a41")
+    @NotNull
     private UUID ownerId;
 
     @ApiModelProperty(value = "Идентификатор адреса", example = "c21239e6-6e31-4dc0-894a-64e55be69a41")

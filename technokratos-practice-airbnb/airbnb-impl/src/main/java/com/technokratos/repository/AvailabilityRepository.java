@@ -17,8 +17,6 @@ public interface AvailabilityRepository extends JpaRepository<AvailabilityEntity
 
     List<AvailabilityEntity> getAvailabilityByApartmentId(UUID id);
 
-    //Optional<AvailabilityEntity> findByApartment_IdAndDeletedIsFalseAndDateFromBeforeAndDateToAfter(UUID apartment_id, Date dateFrom, Date dateTo);
-
     Optional<AvailabilityEntity> findByApartment_IdAndDeletedIsFalseAndDateFromLessThanEqualAndDateToGreaterThanEqual(UUID apartment_id, Date dateFrom, Date dateTo);
 
 }
