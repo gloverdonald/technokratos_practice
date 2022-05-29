@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/apartments")
-public interface ApartmentApi<PRINCIPAL> {
+public interface ApartmentApi<PRINCIPAL, T> {
     @ApiOperation(value = "Добавление апартамента", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Добавленный апартамент",
@@ -125,4 +126,6 @@ public interface ApartmentApi<PRINCIPAL> {
                                @Valid @RequestBody BookingRequest bookingRequest,
                                @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
+    @GetMapping(value = "/all")
+    List<ApartmentResponse> getAllApartments(Specification<T> specification);
 }

@@ -2,18 +2,25 @@ package com.technokratos.service.impl;
 
 import com.technokratos.dto.request.ApartmentRequest;
 import com.technokratos.dto.response.ApartmentResponse;
-import com.technokratos.exception.*;
+import com.technokratos.exception.AccessDeniedException;
+import com.technokratos.exception.ApartmentNotFoundException;
+import com.technokratos.exception.UserNotFoundException;
 import com.technokratos.mapper.ApartmentMapper;
 import com.technokratos.model.ApartmentAddressEntity;
 import com.technokratos.model.ApartmentEntity;
 import com.technokratos.model.ApartmentInfoEntity;
 import com.technokratos.model.UserEntity;
-import com.technokratos.repository.*;
+import com.technokratos.repository.AddressRepository;
+import com.technokratos.repository.ApartmentInfoRepository;
+import com.technokratos.repository.ApartmentRepository;
+import com.technokratos.repository.UserRepository;
 import com.technokratos.service.ApartmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -65,6 +72,11 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
         apartmentMapper.update(apartment, apartmentRequest);
         return apartmentMapper.toResponse(apartmentRepository.save(apartment));
+    }
+
+    @Override
+    public List<ApartmentResponse> getAll(Specification<ApartmentEntity> specification) {
+        return apartmentRepository.findAll(specification).stream().map(apartmentMapper::toResponse).toList();
     }
 
     private Boolean isUserOwnerOrAdmin(String ownerEmail, UserDetails userDetails) {
