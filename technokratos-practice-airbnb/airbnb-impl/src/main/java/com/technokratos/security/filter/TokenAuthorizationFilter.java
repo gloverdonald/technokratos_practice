@@ -4,17 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technokratos.dto.response.UserResponse;
 import com.technokratos.service.TokenAuthorizationService;
-import com.technokratos.service.impl.TokenAuthorizationServiceImpl;
 import com.technokratos.util.HttpResponseUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-
 @RequiredArgsConstructor
 public class TokenAuthorizationFilter extends GenericFilterBean {
-    private final TokenAuthorizationServiceImpl tokenAuthorizationService;
+    private final TokenAuthorizationService tokenAuthorizationService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException {
