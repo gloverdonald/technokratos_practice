@@ -3,6 +3,7 @@ package com.technokratos.service.impl;
 import com.technokratos.dto.request.ApartmentRequest;
 import com.technokratos.dto.response.ApartmentResponse;
 import com.technokratos.exception.AccessDeniedException;
+import com.technokratos.exception.AddressNotFoundException;
 import com.technokratos.exception.ApartmentNotFoundException;
 import com.technokratos.exception.UserNotFoundException;
 import com.technokratos.mapper.ApartmentMapper;
@@ -27,7 +28,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class ApartmentServiceImpl implements ApartmentService {
-    private final ApartmentInfoRepository apartmentInfoRepository;
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;
     private final ApartmentRepository apartmentRepository;
@@ -35,19 +35,12 @@ public class ApartmentServiceImpl implements ApartmentService {
 
     @Override
     public ApartmentResponse save(ApartmentRequest apartmentRequest) {
-        ApartmentEntity apartmentEntity = apartmentRepository.save(apartmentMapper.toEntity(apartmentRequest));
+        ApartmentEntity apartmentEntity = apartmentMapper.toEntity(apartmentRequest);
+        ApartmentAddressEntity address = addressRepository.findById(apartmentRequest.getAddressId()).orElseThrow(AddressNotFoundException::new);
         UserEntity owner = userRepository.findById(apartmentRequest.getOwnerId()).orElseThrow(UserNotFoundException::new);
-        if (apartmentRequest.getInfoId() != null) {
-            Optional<ApartmentInfoEntity> apartmentInfo = apartmentInfoRepository.findById(apartmentRequest.getInfoId());
-            apartmentInfo.ifPresent(apartmentEntity::setInfo);
-        }
-        if (apartmentRequest.getAddressId() != null) {
-            Optional<ApartmentAddressEntity> apartmentAddress = addressRepository.findById(apartmentRequest.getAddressId());
-            apartmentAddress.ifPresent(apartmentEntity::setAddress);
-        }
+        apartmentEntity.setAddress(address);
         apartmentEntity.setOwner(owner);
-        ApartmentEntity apartment = apartmentRepository.save(apartmentEntity);
-        return apartmentMapper.toResponse(apartment);
+        return apartmentMapper.toResponse(apartmentRepository.save(apartmentEntity));
     }
 
     @Override

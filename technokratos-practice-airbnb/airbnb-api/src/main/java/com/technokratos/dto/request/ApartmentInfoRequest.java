@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @ApiModel(value = "Информация об апартаменте")
 public class ApartmentInfoRequest {
-
     @ApiModelProperty(value = "Парковка")
     private Boolean parking;
 

@@ -46,9 +46,6 @@ public class ApartmentInfoResponse {
     @ApiModelProperty(value = "Стиральная машина")
     private Boolean washingMachine;
 
-    @ApiModelProperty(value = "Апартамент")
-    private ApartmentResponse apartment;
-
     @ApiModelProperty(value = "Удален")
     private Boolean deleted;
 }

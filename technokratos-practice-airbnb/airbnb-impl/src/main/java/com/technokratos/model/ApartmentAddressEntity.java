@@ -31,10 +31,6 @@ public class ApartmentAddressEntity extends AbstractEntity {
     @Column(name = "postal_code")
     private String postalCode;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "apartment_id", referencedColumnName = "id")
-    private ApartmentEntity apartment;
-
     @Builder.Default
     private Boolean deleted = false;
 }

@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
 @Builder
 @ApiModel(value = "Адрес")
 public class AddressRequest {
-
     @NotBlank(message = "Адрес должен иметь название страны")
     @Size(min = 2, max = 50, message = "минимальный размер названия страны - {min}, максимальный - {max}")
     @ApiModelProperty(value = "Страна")
