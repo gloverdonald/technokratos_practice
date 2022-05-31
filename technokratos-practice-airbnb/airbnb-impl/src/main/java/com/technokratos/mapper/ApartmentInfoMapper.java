@@ -1,9 +1,7 @@
 package com.technokratos.mapper;
 
 import com.technokratos.dto.request.ApartmentInfoRequest;
-import com.technokratos.dto.request.ApartmentRequest;
 import com.technokratos.dto.response.ApartmentInfoResponse;
-import com.technokratos.model.ApartmentEntity;
 import com.technokratos.model.ApartmentInfoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+
+    <changeSet author="Mikhail" id="014">
+        <dropColumn tableName="apartment_address">
+            <column name="apartment_id"/>
+        </dropColumn>
+        <dropColumn tableName="apartment_info">
+            <column name="apartment_id"/>
+        </dropColumn>
+        <addColumn tableName="apartment">
+            <column name="info_id" type="uuid">
+                <constraints foreignKeyName="fk_apartment_info"
+                             referencedTableName="apartment_info"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="address_id" type="uuid">
+                <constraints foreignKeyName="fk_info_apartment"
+                             referencedTableName="apartment_address"
+                             referencedColumnNames="id"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

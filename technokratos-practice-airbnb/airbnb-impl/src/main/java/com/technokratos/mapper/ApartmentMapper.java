@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 
-@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, uses = UserMapper.class)
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, uses = {UserMapper.class, ApartmentInfoMapper.class, AddressMapper.class})
 public interface ApartmentMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createDate", ignore = true)

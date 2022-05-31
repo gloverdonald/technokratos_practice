@@ -8,13 +8,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
-
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createDate", ignore = true)
     @Mapping(target = "updateDate", ignore = true)
     ApartmentAddressEntity toAddress(AddressRequest addressRequest);
-    AddressRequest toRequest(ApartmentAddressEntity addressEntity);
 
-    @Mapping(target = "apartmentId", source = "apartment.id")
     AddressResponse toResponse(ApartmentAddressEntity addressEntity);
 }

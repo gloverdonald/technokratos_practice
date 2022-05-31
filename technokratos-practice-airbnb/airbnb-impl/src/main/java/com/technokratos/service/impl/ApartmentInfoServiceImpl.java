@@ -13,6 +13,7 @@ import com.technokratos.service.ApartmentInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -26,18 +27,21 @@ public class ApartmentInfoServiceImpl implements ApartmentInfoService {
     public ApartmentInfoResponse create(UUID apartmentId, ApartmentInfoRequest apartmentInfoRequest) {
         ApartmentEntity apartment = apartmentRepository.findById(apartmentId).orElseThrow(ApartmentNotFoundException::new);
         ApartmentInfoEntity apartmentInfo = apartmentInfoMapper.toEntity(apartmentInfoRequest);
-        apartmentInfo.setApartment(apartment);
-        return apartmentInfoMapper.toResponse(apartmentInfoRepository.save(apartmentInfo));
+        apartment.setInfo(apartmentInfo);
+        return apartmentInfoMapper.toResponse(apartmentRepository.save(apartment).getInfo());
     }
 
     @Override
     public ApartmentInfoResponse get(UUID apartmentId) {
-        return apartmentInfoMapper.toResponse(apartmentInfoRepository.findByApartment_Id(apartmentId).orElseThrow(ApartmentInfoNotFoundException::new));
+        ApartmentEntity apartment = apartmentRepository.findById(apartmentId).orElseThrow(ApartmentNotFoundException::new);
+        ApartmentInfoEntity apartmentInfo = Optional.of(apartment.getInfo()).orElseThrow(ApartmentInfoNotFoundException::new);
+        return apartmentInfoMapper.toResponse(apartmentInfo);
     }
 
     @Override
     public ApartmentInfoResponse update(UUID apartmentId, ApartmentInfoRequest apartmentInfoRequest) {
-        ApartmentInfoEntity apartmentInfo = apartmentInfoRepository.findByApartment_Id(apartmentId).orElseThrow(ApartmentInfoNotFoundException::new);
+        ApartmentEntity apartment = apartmentRepository.findById(apartmentId).orElseThrow(ApartmentNotFoundException::new);
+        ApartmentInfoEntity apartmentInfo = Optional.of(apartment.getInfo()).orElseThrow(ApartmentInfoNotFoundException::new);
         apartmentInfoMapper.update(apartmentInfo, apartmentInfoRequest);
         return apartmentInfoMapper.toResponse(apartmentInfoRepository.save(apartmentInfo));
     }

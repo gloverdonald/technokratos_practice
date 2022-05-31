@@ -33,10 +33,6 @@ public class ApartmentInfoEntity extends AbstractEntity {
     @Column(name = "washing_machine")
     private Boolean washingMachine;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "apartment_id", referencedColumnName = "id")
-    private ApartmentEntity apartment;
-
     @Builder.Default
     private Boolean deleted = false;
 }

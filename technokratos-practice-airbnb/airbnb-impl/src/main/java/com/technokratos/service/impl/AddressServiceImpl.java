@@ -18,15 +18,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class AddressServiceImpl implements AddressService {
-
     private final AddressRepository addressRepository;
     private final DaDataUtil daDataUtil;
     private final AddressMapper addressMapper;
 
     @Override
     public AddressResponse create(AddressRequest addressRequest) {
-        ApartmentAddressEntity apartmentAddress = addressMapper.toAddress(addressRequest);
-        return addressMapper.toResponse(apartmentAddress);
+        return addressMapper.toResponse(addressRepository.save(addressMapper.toAddress(addressRequest)));
     }
 
     @Override

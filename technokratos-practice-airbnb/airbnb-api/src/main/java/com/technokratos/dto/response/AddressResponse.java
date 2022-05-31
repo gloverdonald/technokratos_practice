@@ -39,7 +39,4 @@ public class AddressResponse {
 
     @ApiModelProperty(value = "Индекс")
     private String postalCode;
-
-    @ApiModelProperty(value = "Идентификатор апартамента")
-    private UUID apartmentId;
 }

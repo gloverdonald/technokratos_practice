@@ -31,14 +31,16 @@ public class ApartmentEntity extends AbstractEntity {
     @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
     private List<BookingEntity> bookings;
 
-    @OneToOne(mappedBy = "apartment")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "address_id")
     private ApartmentAddressEntity address;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
     private List<ApartmentReviewEntity> reviews;
 
-    @OneToOne(mappedBy = "apartment")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "info_id")
     private ApartmentInfoEntity info;
 
     @ToString.Exclude
