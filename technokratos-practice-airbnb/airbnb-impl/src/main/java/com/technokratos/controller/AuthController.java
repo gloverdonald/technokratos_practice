@@ -22,11 +22,6 @@ public class AuthController implements AuthApi {
     private final UserService userService;
     private final TokenService tokenService;
 
-    @GetMapping("/test")
-    public String test() {
-        return "tested";
-    }
-
     @Override
     public UUID create(RegistrationRequest userRequest) {
         return userService.create(userRequest);

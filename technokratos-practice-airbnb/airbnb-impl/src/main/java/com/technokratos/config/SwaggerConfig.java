@@ -2,6 +2,7 @@ package com.technokratos.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -20,6 +21,7 @@ public class SwaggerConfig {
     @Bean
     public Docket swaggerDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .ignoredParameterTypes(AuthenticationPrincipal.class)
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
@@ -27,7 +29,7 @@ public class SwaggerConfig {
                 .globalOperationParameters(
                         Collections.singletonList(new ParameterBuilder()
                                 .name(AUTHORIZATION)
-                                .description("Authorization token")
+                                .description("Access token")
                                 .modelRef(new ModelRef("string"))
                                 .parameterType("header")
                                 .required(false)
