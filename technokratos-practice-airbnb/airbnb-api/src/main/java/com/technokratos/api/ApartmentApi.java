@@ -25,7 +25,8 @@ public interface ApartmentApi<PRINCIPAL, T> {
                     response = ApartmentResponse.class)})
     @PostMapping(value = "/add")
     @ResponseStatus(HttpStatus.CREATED)
-    ApartmentResponse create(@ApiParam(value = "Данные для адреса") @Valid @RequestBody ApartmentRequest apartmentRequest);
+    ApartmentResponse create(@ApiParam(value = "Данные для адреса") @Valid @RequestBody ApartmentRequest apartmentRequest,
+                             @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
     @ApiOperation(value = "Получение апартамента", produces = "application/json")
     @ApiResponses(value = {
