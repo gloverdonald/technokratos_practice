@@ -34,8 +34,10 @@ public class ApartmentResponse {
     @ApiModelProperty(value = "Удален")
     private Boolean deleted;
 
+    @ApiModelProperty(value = "Адрес")
     private AddressResponse address;
 
+    @ApiModelProperty(value = "Информация об апартаменте")
     private ApartmentInfoResponse info;
 }
 

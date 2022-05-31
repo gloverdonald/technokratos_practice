@@ -14,17 +14,21 @@ import java.util.UUID;
 
 @RequestMapping("/api/v1/address")
 public interface AddressApi {
+    @ApiOperation(value = "Добавление адреса DaData", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Добавленный адрес DaData",
+                    response = AddressResponse.class)})
+    @PostMapping(value = "/add-dadata")
+    @ResponseStatus(HttpStatus.CREATED)
+    AddressResponse create(@ApiParam(value = "Адрес DaData") @RequestBody DaDataAddressRequest address);
+
     @ApiOperation(value = "Добавление адреса", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Добавленный адрес",
                     response = AddressResponse.class)})
-    @PostMapping(value = "/add-dadata")
-    @ResponseStatus(HttpStatus.CREATED)
-    AddressResponse create(@ApiParam(value = "адрес dadata") @RequestBody DaDataAddressRequest address);
-
     @PostMapping(value = "/add")
     @ResponseStatus(HttpStatus.CREATED)
-    AddressResponse create(@RequestBody AddressRequest address);
+    AddressResponse create(@ApiParam(value = "Данные адреса") @RequestBody AddressRequest address);
 
     @ApiOperation(value = "Получение адреса", produces = "application/json")
     @ApiResponses(value = {
@@ -32,5 +36,5 @@ public interface AddressApi {
                     response = AddressResponse.class)})
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    AddressResponse get(@ApiParam(value = "адрес dadata") @PathVariable UUID id);
+    AddressResponse get(@ApiParam(value = "Идентификатор адреса") @PathVariable UUID id);
 }

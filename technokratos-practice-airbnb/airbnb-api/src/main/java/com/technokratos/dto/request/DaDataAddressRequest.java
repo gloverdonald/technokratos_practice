@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +17,6 @@ import lombok.NoArgsConstructor;
 public class DaDataAddressRequest {
 
     @ApiModelProperty(value = "Адрес")
+    @NotBlank(message = "Должен быть адрес")
     private String address;
 }

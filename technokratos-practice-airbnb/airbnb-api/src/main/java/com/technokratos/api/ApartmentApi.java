@@ -6,10 +6,7 @@ import com.technokratos.dto.request.BookingRequest;
 import com.technokratos.dto.response.ApartmentResponse;
 import com.technokratos.dto.response.AvailabilityResponse;
 import com.technokratos.dto.response.BookingResponse;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -126,6 +123,11 @@ public interface ApartmentApi<PRINCIPAL, T> {
                                @Valid @RequestBody BookingRequest bookingRequest,
                                @AuthenticationPrincipal PRINCIPAL userPrincipal);
 
+    @ApiOperation(value = "Получение всех апартаментов с заданными параметрами", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Полученные апартаменты",
+                    response = ApartmentResponse.class)})
     @GetMapping(value = "/all")
+    @ResponseStatus(HttpStatus.OK)
     List<ApartmentResponse> getAllApartments(Specification<T> specification);
 }
