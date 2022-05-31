@@ -33,8 +33,8 @@ public class ApartmentController implements ApartmentApi<UserDetails, ApartmentE
     private final BookingService bookingService;
 
     @Override
-    public ApartmentResponse create(ApartmentRequest apartmentRequest) {
-        return apartmentService.save(apartmentRequest);
+    public ApartmentResponse create(ApartmentRequest apartmentRequest, UserDetails userDetails) {
+        return apartmentService.save(apartmentRequest, userDetails);
     }
 
     @Override

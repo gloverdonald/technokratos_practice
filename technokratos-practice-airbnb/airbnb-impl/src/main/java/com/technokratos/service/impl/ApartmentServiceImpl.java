@@ -34,10 +34,10 @@ public class ApartmentServiceImpl implements ApartmentService {
     private final ApartmentMapper apartmentMapper;
 
     @Override
-    public ApartmentResponse save(ApartmentRequest apartmentRequest) {
+    public ApartmentResponse save(ApartmentRequest apartmentRequest, UserDetails userDetails) {
         ApartmentEntity apartmentEntity = apartmentMapper.toEntity(apartmentRequest);
         ApartmentAddressEntity address = addressRepository.findById(apartmentRequest.getAddressId()).orElseThrow(AddressNotFoundException::new);
-        UserEntity owner = userRepository.findById(apartmentRequest.getOwnerId()).orElseThrow(UserNotFoundException::new);
+        UserEntity owner = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(UserNotFoundException::new);
         apartmentEntity.setAddress(address);
         apartmentEntity.setOwner(owner);
         return apartmentMapper.toResponse(apartmentRepository.save(apartmentEntity));

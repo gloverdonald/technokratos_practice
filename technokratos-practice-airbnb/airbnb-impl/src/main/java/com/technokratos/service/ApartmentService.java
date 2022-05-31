@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ApartmentService {
-    ApartmentResponse save(ApartmentRequest apartmentRequest);
+    ApartmentResponse save(ApartmentRequest apartmentRequest, UserDetails userDetails);
 
     ApartmentResponse get(UUID id);
 
