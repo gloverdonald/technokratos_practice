@@ -6,7 +6,10 @@ import com.technokratos.dto.request.BookingRequest;
 import com.technokratos.dto.response.ApartmentResponse;
 import com.technokratos.dto.response.AvailabilityResponse;
 import com.technokratos.dto.response.BookingResponse;
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -118,9 +121,11 @@ public interface ApartmentApi<PRINCIPAL, T> {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Добавленное бронирование",
                     response = BookingResponse.class)})
-    @PostMapping(value = "/booking")
+    @PostMapping(value = "/{id}//booking")
     @ResponseStatus(HttpStatus.CREATED)
-    BookingResponse addBooking(@ApiParam(value = "Данные бронирования")
+    BookingResponse addBooking(@ApiParam(value = "Идентификатор апартамента")
+                               @PathVariable("id") UUID apartmentId,
+                               @ApiParam(value = "Данные бронирования")
                                @Valid @RequestBody BookingRequest bookingRequest,
                                @AuthenticationPrincipal PRINCIPAL userPrincipal);
 

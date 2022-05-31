@@ -36,13 +36,8 @@ public class BookingServiceImpl implements BookingService {
     private final UserRepository userRepository;
 
     @Override
-    public AvailabilityResponse saveAvailability(UUID apartmentId,
-                                                 AvailabilityRequest availabilityRequest,
-                                                 UserDetails userDetails) {
-        if (availabilityRepository.isNotAvailable(
-                apartmentId,
-                availabilityRequest.getDateFrom(),
-                availabilityRequest.getDateTo())) {
+    public AvailabilityResponse saveAvailability(UUID apartmentId, AvailabilityRequest availabilityRequest, UserDetails userDetails) {
+        if (availabilityRepository.isNotAvailable(apartmentId, availabilityRequest.getDateFrom(), availabilityRequest.getDateTo())) {
             throw new HaveAnotherAvailability();
         }
         ApartmentEntity apartment = apartmentRepository.findById(apartmentId).orElseThrow(ApartmentNotFoundException::new);
@@ -72,12 +67,12 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingResponse addBooking(BookingRequest bookingRequest, UserDetails userDetails) {
+    public BookingResponse addBooking(UUID apartmentId, BookingRequest bookingRequest, UserDetails userDetails) {
         ApartmentEntity apartment = apartmentRepository
-                .findById(bookingRequest.getApartmentId()).orElseThrow(ApartmentNotFoundException::new);
+                .findById(apartmentId).orElseThrow(ApartmentNotFoundException::new);
         UserEntity customer = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(UserNotFoundException::new);
         AvailabilityEntity availability = availabilityRepository.findByApartment_IdAndDeletedIsFalseAndDateFromLessThanEqualAndDateToGreaterThanEqual(
-                bookingRequest.getApartmentId(),
+                apartmentId,
                 bookingRequest.getDateIn(),
                 bookingRequest.getDateOut()
         ).orElseThrow(AvailabilityNotFoundException::new);
