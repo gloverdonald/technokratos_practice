@@ -16,5 +16,5 @@ public interface BookingService {
 
     void deleteAvailability(UUID availabilityId, UserDetails userDetails);
 
-    BookingResponse addBooking(BookingRequest bookingRequest, UserDetails userDetails);
+    BookingResponse addBooking(UUID apartmentId, BookingRequest bookingRequest, UserDetails userDetails);
 }

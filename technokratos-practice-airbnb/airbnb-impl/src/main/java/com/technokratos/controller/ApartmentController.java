@@ -88,8 +88,8 @@ public class ApartmentController implements ApartmentApi<UserDetails, ApartmentE
     }
 
     @Override
-    public BookingResponse addBooking(BookingRequest bookingRequest, UserDetails userDetails) {
-        return bookingService.addBooking(bookingRequest, userDetails);
+    public BookingResponse addBooking(UUID apartmentId, BookingRequest bookingRequest, UserDetails userDetails) {
+        return bookingService.addBooking(apartmentId, bookingRequest, userDetails);
     }
 
     public List<ApartmentResponse> getAllApartments(
