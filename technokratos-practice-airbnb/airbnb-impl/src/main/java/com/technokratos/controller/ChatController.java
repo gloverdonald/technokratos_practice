@@ -20,11 +20,6 @@ import java.util.UUID;
 public class ChatController implements ChatApi<UserDetails> {
     private final ChatService chatService;
 
-    @GetMapping("/test")
-    public String getTest(@AuthenticationPrincipal UserDetails userDetails) {
-        return "test";
-    }
-
     @Override
     public MessageResponse getMessageById(UUID id, UserDetails userDetails) {
         return chatService.getMessageById(id, userDetails);
